@@ -1,0 +1,137 @@
+.add-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+/* AddUser.css */
+
+.add-user {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* changed from center */
+  padding: .5rem;
+  margin-top: 3rem;
+  width: 450px;
+  background: #f4f6f8;
+  height: 90vh;
+  overflow-y: auto; /* Enables vertical scrolling */
+  
+}
+.close-adduser-form{
+position: absolute;
+ margin-top: 3rem;
+}
+.register-user {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-top: 2rem;
+  max-width: 500px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+ 
+}
+
+.register-user:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.register-user h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #2d2d2d;
+}
+
+.register-user span {
+  font-size: 0.95rem;
+  color: #666;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.register-user label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.register-user input {
+  width: 100%;
+  padding: 0.50rem 1rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-user input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.register-user-btn {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-user-btn:hover {
+  background-color: #0056b3;
+}
+
+  .user-type-toggle button {
+    padding: 8px 16px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .user-type-toggle .active {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  /***responsiviness*********/
+
+  @media (min-width: 601px) and (max-width: 800px) {
+
+    .view-items {
+      width:790px; /* Full width on small screens **/
+   
+      margin-left: -8rem; 
+      margin-top: -7%;
+    
+    }
+  }
+  
+@media (min-width: 300px) and (max-width: 600px) {
+
+  .view-items {
+    width:620px; /* Full width on small screens **/
+ 
+    margin-left: -1rem; 
+    margin-top: -7%;
+  
+  }
+}

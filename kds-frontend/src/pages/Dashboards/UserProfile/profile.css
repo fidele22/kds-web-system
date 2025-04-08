@@ -1,0 +1,167 @@
+/* profile.css */
+
+.user-profile {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-profile h2 {
+  text-align: center;
+  color: #1976d2;
+  margin-bottom: 30px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 2px solid #1976d2;
+}
+
+.profile-header h3 {
+  color: #333;
+  font-size: 20px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.form-group input:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.update-button,
+.edit-button {
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-button {
+  background-color: #388e3c;
+  color: white;
+}
+
+.update-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.edit-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.edit-button:hover,
+.update-button:hover {
+  opacity: 0.9;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+}
+
+.error {
+  color: red;
+}
+
+/* Custom SweetAlert style */
+.custom-swal {
+  font-family: 'Segoe UI', sans-serif;
+}
+/* css of changing user password divisions */
+
+.password-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.toggle-password-form {
+  padding: 0.5rem 1rem;
+  background-color: #fdd835;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.password-form .form-group {
+  margin: 1rem 0;
+}
+
+.password-form input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.password-form .update-button {
+  background-color: #2e7d32;
+  color: white;
+  width: 50px;
+  font-weight: 600;
+}
+.form-actions{
+  width: 250px;
+
+}
+.form-actions button{
+  font-size: 13px;
+}
+
