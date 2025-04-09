@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaUser , FaSignOutAlt, FaChevronDown, FaBars,FaTimes } from 'react-icons/fa'; // Import FaBars for the toggle icon
+import { FaUser , FaSignOutAlt, FaChevronDown, FaBars,FaTimes } from 'react-icons/fa'; // Import FaBars
+// import image3 from '../../../assets/4.png';
 import './TopNavbar.css';
 import axios from 'axios';
 
@@ -77,6 +78,7 @@ function TopNavbar({ setCurrentPage, toggleNav,isNavVisible}) {
       <div className="logo">
         <h1>KDS</h1>
         <p>Kigali Diesel Service</p>
+        {/* <img src={image3} alt="" /> */}
       </div>
       <div className="menu-navbar-toggle" onClick={toggleNav}>
       {isNavVisible ? <FaTimes /> : <FaBars />} {/* Toggle icon for opening the left navigation */}

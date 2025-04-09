@@ -99,19 +99,48 @@ position: absolute;
 .register-user-btn:hover {
   background-color: #0056b3;
 }
+/* User Type Toggle */
 
-  .user-type-toggle button {
-    padding: 8px 16px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  
-  .user-type-toggle .active {
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-  }
-  
+.user-type-toggle {
+
+  display: flex;
+
+}
+
+
+.user-type-toggle button {
+
+  background-color: #3b3f44;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  margin-right: 10px;
+
+  transition: background-color 0.3s;
+
+}
+
+
+.user-type-toggle button.active {
+
+  background-color: #0056b3;
+
+}
+
+
+.user-type-toggle button:hover {
+
+  background-color: #0056b3;
+
+}
   /***responsiviness*********/
 
   @media (min-width: 601px) and (max-width: 800px) {

@@ -1,0 +1,251 @@
+/* Add User Button */
+/* Header Styles */
+
+.headers-title h2{
+text-align: center;
+}
+.add-new-user-btn {
+
+  background-color: #28a745;
+
+  color: white;
+
+  border: none;
+  position: absolute;
+  right: 0;
+  border-radius: 5px;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  transition: background-color 0.3s;
+
+}
+
+/* Search Bar */
+
+.searchbar {
+
+  margin-bottom: 20px;
+
+}
+
+
+.searchbar input {
+
+  width: 100%;
+
+  padding: 10px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 5px;
+
+}
+.pagination-controls {
+  margin-top: 20px;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.pagination-controls button{
+  padding:5px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  border: none;
+  background-color: #007bff;
+  font-size: 18px;
+  border-radius: 5px;
+}
+.pagination-controls button:hover{
+  background-color: blue;
+}
+.page-btn {
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+}
+
+.page-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+
+/* Overlay Styles */
+
+.add-overlay, .editing-userdata-ovelay {
+
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
+
+.add-user-form-container, .editinguser-form {
+
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 8px;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  width: 400px;
+
+}
+
+
+.close-adduser-form:hover, .edit-user-close-btn:hover {
+  cursor: pointer;
+  color: #ff0000;
+
+}
+
+
+/* Form Styles */
+
+.editinguser-form input, .editinguser-form select {
+
+  width: 100%;
+
+  padding: 10px;
+
+  margin: 10px 0;
+
+  border: 1px solid #ddd;
+
+  border-radius: 5px;
+
+}
+
+
+.update-user-btn {
+
+  background-color: #007bff;
+  color: white;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+
+  transition: background-color 0.3s;
+
+}
+
+
+.update-user-btn:hover {
+
+  background-color: #0056b3;
+
+}
+
+
+ /****************styling editing******************/ 
+ .editing-userdata-ovelay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+.editinguser-form{
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+  width: 400px;
+  height: 500px;
+  overflow-y: scroll;
+}
+.edit-user-close-btn{
+
+}
+.editinguser-form h2{
+   text-align: center;
+   padding: 5px;
+   font-size: 20px;
+   color: #007bff;
+   font-weight: 900;
+}
+  .view-items {
+    width:auto;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+   
+  }
+  
+  .items-table {
+    border-collapse: collapse;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 95%;
+    overflow-x: auto; /* Horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+
+  }
+ 
+  .items-table .searchbar{
+    width: 30%;
+    padding:15px;
+  }
+  .items-table th, .items-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 12px;
+    width:200px;
+  }
+  
+  .items-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+
+  .edit-delete label{
+  
+    cursor: pointer;
+    gap: 10px;
+    font-size: 10px;
+   
+    float: left;
+    width:20px;
+    
+  }
+  .user-cancel-btn{
+    background-color: red;
+    font-size: 16px;
+  }
+
+ 

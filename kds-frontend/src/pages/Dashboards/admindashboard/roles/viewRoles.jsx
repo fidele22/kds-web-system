@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddNewRole from './AddRole';
 import Swal from 'sweetalert2'; 
-import { FaEdit, FaTrash, FaTimes, FaPlus } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaTimes, FaPlus,FaShieldAlt  } from 'react-icons/fa';
 import axios from 'axios';
 import '../css/service.css';
 import './rolestyling.css';
@@ -135,7 +135,10 @@ const ViewPosition = () => {
             <ul>
               {Array.isArray(role.privileges) && role.privileges.length > 0 ? (
                 role.privileges.map((privilege, index) => (
-                  <li key={index}>{privilege}</li>
+                  <li key={index}>
+  <FaShieldAlt style={{ marginRight: '8px', color: '#2c3e50' }} />
+  {privilege}
+</li>
                 ))
               ) : (
                 <li>No privileges assigned.</li>

@@ -15,19 +15,17 @@ router.post('/addRole', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
-// GET /api/services - Fetch all services
+// GET /api/services - Fetch all roles except "ADMIN"
 router.get('/', async (req, res) => {
   try {
-    const roles = await UserRole.find();
+    const roles = await UserRole.find({ name: { $ne: 'ADMIN' } });
     res.status(200).json(roles);
-   
   } catch (error) {
-    console.error('Error fetching services:', error);
+    console.error('Error fetching roles:', error);
     res.status(500).json({ error: 'Server error' });
-    
   }
 });
+
 
 // PUT /api/positions/:id - Update position
 router.put('/:id', async (req, res) => {

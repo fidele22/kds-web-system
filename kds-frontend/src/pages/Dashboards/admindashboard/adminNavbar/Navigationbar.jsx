@@ -26,26 +26,43 @@ const Navbar = ({ setCurrentPage, isMenuOpen, setIsMenuOpen }) => {
     };
   }, [setIsMenuOpen]);
 
+  // logout function
+const handleLogout = async () => {
+  try {
+    await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/logout`);
+    sessionStorage.clear();
+    window.location.href = '/';
+    window.history.pushState(null, null, '/');
+    window.onpopstate = () => {
+      window.location.href = '/';
+    };
+  } catch (error) {
+    console.error('Error during logout:', error);
+    alert('Error while logging out');
+  }
+};
   return (
     <div ref={navbarRef} className={`adminavbar ${isMenuOpen ? 'open' : ''}`}>
-     <div className="nav-logo">
-      <h1>Lmis</h1>
-      </div>
+
       <ul>
         <li onClick={() => handleLinkClick('adminoverview')}><FaHome /> Overview</li>
+        <u><h3>Admin settings</h3></u>
         <li onClick={() => handleLinkClick('view-Users')}><FaUser  /> Users</li>
         <li onClick={() => handleLinkClick('user-roles')}><FaHome /> User Roles</li>
-        <li onClick={() => handleLinkClick('view-service')}><FaList /> Services</li>
-        <li onClick={() => handleLinkClick('view-position')}><FaClipboardList /> Positions</li>
-        <li onClick={() => handleLinkClick('view-department')}><FaBurn /> Departments</li>
+     
       </ul>
 
-      <h2>Settings</h2>
-      <ul>
+      <u><h3>Account settings</h3></u>
+      <ol>
         <li onClick={() => handleLinkClick('user-profile')}><FaUser  /> Profile</li>
         <li onClick={() => handleLinkClick('help-center')}><FaBurn /> Help Center</li>
         
-      </ul>
+      </ol>
+         <div className='logout-btn'>
+                  <li onClick={handleLogout}>
+                                  <FaSignOutAlt color='black' /> Logout
+                                </li>
+              </div>
     </div>
   );
 };

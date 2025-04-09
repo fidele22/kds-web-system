@@ -17,13 +17,52 @@
     background-color: white;
     box-shadow: rgba(29, 84, 129, 0.2) 0px 2px 8px 0px;
 }
+/* Button Styles */
+
+.add-department-btn {
+
+    background-color: #28a745;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 5px;
+
+    padding: 10px 15px;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+
+}
+
+
+.add-department-btn:hover {
+
+    background-color: #218838;
+
+}
+.service-table-data h1{
+    padding: 5px;
+    font-size: 18px;
+    text-align: center;
+}
 .role-privileges h2{
     color: rgb(42, 42, 240);
     font-size: 17px;
     text-align: center;
 }
-.role-privileges li{
-    color: rgb(117, 116, 116);
+.role-privileges ul {
+
+    list-style-type: none;
+    padding: 0;
+
+}
+.role-privileges li {
+    padding: 5px 0;
+    color: #636262;
+
 }
 .assign-privilege {
     background-color: #f9f9f9; /* Light background for contrast */
@@ -51,6 +90,49 @@
 .assign-privilege input[type="checkbox"] {
     margin-right: 10px; /* Space between checkbox and label */
     transform: scale(1.2); /* Slightly larger checkboxes */
+}
+.table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+}
+
+
+.table th, .table td {
+
+    border: 1px solid #ddd;
+
+    padding: 10px;
+
+    text-align: left;
+
+}
+
+
+.table th {
+
+    background-color: #007bff;
+
+    color: white;
+
+}
+
+
+.table tr:nth-child(even) {
+
+    background-color: #f2f2f2;
+
+}
+
+
+.table tr:hover {
+
+    background-color: #ddd;
+
 }
 /* Container for privileges */
 .edit-form {

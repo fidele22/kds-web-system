@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginSignup.css';
 
-import image1 from '../../assets/4.png';
-import image2 from '../../assets/2.jpg';
-import image3 from '../../assets/3.jpg';
+import image1 from '../../assets/1.png';
+import image2 from '../../assets/3.png';
+import image3 from '../../assets/5.png';
 
 const images = [image1, image2, image3];
 
@@ -142,13 +142,13 @@ const LoginSignup = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const scrollInterval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
+    }, 3000); // Adjust this interval as needed
+  
+    return () => clearInterval(scrollInterval); // Clear interval on component unmount
+  }, []);
+  
   return (
     <div id="container" className={`container ${isSignIn ? 'sign-in' : 'sign-up'}`}>
       <div className="row">

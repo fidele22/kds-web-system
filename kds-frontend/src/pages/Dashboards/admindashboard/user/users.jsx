@@ -3,7 +3,7 @@ import { FaEdit, FaTrash,FaTimes,FaTimesCircle,FaCheckCircle } from 'react-icons
 import axios from 'axios';
 import Swal from 'sweetalert2'; 
 import AddUser from './AddUser'; // Import the AddUser component
-import '../css/adminDashboard.css';
+import '../css/users.css';
 import '../css/AddUser.css'
 
 const ViewItems = () => {
@@ -132,12 +132,16 @@ const ViewItems = () => {
         headers: { 'Content-Type': 'application/json' }
       });
       
-        // Update the users state directly using the response data from the server (updated user data)
-    setUsers(prevUsers => 
-      prevUsers.map(user => 
-        user._id === editingUser ? { ...user, ...formData, role: { _id: formData.role } } : user
-      )
-    );
+      const updatedRole = roles.find(role => role._id === formData.role);
+
+      setUsers(prevUsers => 
+        prevUsers.map(user => 
+          user._id === editingUser
+            ? { ...user, ...formData, role: updatedRole || { _id: formData.role } }
+            : user
+        )
+      );
+      
 
         // Show success message using SweetAlert2
         Swal.fire ({
@@ -308,10 +312,11 @@ const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
         {editingUser && (
           <div className="editing-userdata-ovelay">
             <div className="editinguser-form">
-            <button className='edit-user-close-btn' onClick={handleCloseForm}>
+           
+              <form onSubmit={handleSubmit}>
+              <button className='edit-user-close-btn' onClick={handleCloseForm}>
                 <FaTimes size={44} />
               </button>
-              <form onSubmit={handleSubmit}>
                 <h2>Edit User</h2>
                 <label>First Name</label>
                 <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />

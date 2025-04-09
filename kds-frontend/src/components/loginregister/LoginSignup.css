@@ -278,17 +278,19 @@ body {
     right: 50%;
 }
 .img.sign-in {
-    position: relative;
-    width: 80%;
-    height: 250px; /* Adjust height as needed */
-    overflow: hidden;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth; /* Smooth scroll effect */
+    width: 70%;
+    height: auto;
   }
   
   .img.sign-in img {
-    width: 40%;
-    height: auto;
-    transition: transform 0.5s ease-in-out; /* Smooth transition */
+    width: 100%;
+    object-fit: cover;
   }
+  
+  
   .error {
     color: red;
     font-size: 0.8em;
