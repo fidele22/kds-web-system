@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
  const authentication = require ('./routers/authentication');
  const userdata = require ('./routers/userData');
  const userRoleRoutes = require ('./routers/userRolesRoute');
+ const receptionForm = require ('./routers/receptionformRouter');
  
 
 
@@ -43,6 +44,7 @@ app.use(session({
  app.use('/api/authentication', authentication);
  app.use('/api/userdata', userdata);
  app.use('/api/roles', userRoleRoutes);
+ app.use('/api/reception-form', receptionForm);
 
 
 // router toggout 
@@ -58,6 +60,7 @@ app.post('/api/logout', (req, res) => {
   }
 });
 
+app.use('/photos', express.static(path.join(__dirname, 'photos')));
 
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {

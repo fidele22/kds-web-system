@@ -2,14 +2,13 @@ import React, { useState, useEffect,useRef } from 'react';
 import TopNavigation from '../navbar/TopNavbar';
 import Footer from '../footer/Footer';
 import LeftNavbar from '../navsidebar/leftNavigationbar';
+import UserProfile from '../UserProfile/profile';
 import Overview from './Overview';
-import UserProfile from '../UserProfile/profile'
-import './receptionDashboard.css';
-import ReceptionForm from './registertool/receptionForm';
-import ReceptionData from './registertool/viewReceptiondata';
+import IssueDiscovered from './repairTool/addissueDiscovered';
+import ViewTask from './repairTool/viewreceptiondata';
+import './engineerDashboard.css';
 
-
-const Dashboard = () => {
+const EngineerDashboard = () => {
   const [currentPage, setCurrentPage] = useState('overview');
   const [privileges, setPrivileges] = useState([]);
   const [isNavVisible, setIsNavVisible] = useState(false); // State for navigation visibility
@@ -40,21 +39,22 @@ const Dashboard = () => {
       setPrivileges([]); // Set to an empty array if no tab ID is found
     }
   }, []);
+
   const renderContent = () => {
     switch (currentPage) {
       case 'overview':
         return <Overview />;
+      case 'add_issue_discovered':
+        return <IssueDiscovered />
+      case 'view_task':
+        return <ViewTask />  
       case 'user-profile':
-          return <UserProfile />;  
-      case 'reception_form':
-          return <ReceptionForm />
-      case 'view_reception_data':
-          return <ReceptionData />
-  
+        return <UserProfile />;
       default:
         return <Overview />;
     }
   };
+
   const toggleNav = () => {
 
     setIsNavVisible(!isNavVisible); // Toggle the navigation visibility
@@ -92,8 +92,8 @@ const Dashboard = () => {
 
   }, []);
   return (
-    <div className="dg-dashboard">
-   <TopNavigation setCurrentPage={setCurrentPage} toggleNav={toggleNav}  isNavVisible={isNavVisible}   />
+    <div className="daf-dashboards">
+      <TopNavigation setCurrentPage={setCurrentPage} toggleNav={toggleNav}  isNavVisible={isNavVisible}   />
       
       <div className="content-navbar">
         <LeftNavbar setCurrentPage={setCurrentPage} isVisible={isNavVisible} 
@@ -111,4 +111,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default EngineerDashboard;

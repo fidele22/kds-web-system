@@ -1,14 +1,49 @@
 const mongoose = require('mongoose');
 
-const FuelOperationSchema = new mongoose.Schema({
-  date: { type: Date, required: true },
-  timeOfOperation: { type: String, required: true },
-  pumpNumber: { type: String, required: true },
-  licensePlate: { type: String, required: true },
-  operationStatus: { type: String, required: true },
-  entryTime: { type: String, required: true },
-  returnTime: { type: String, required: true },
-  returnDetails: { type: String, required: true },
-}, { timestamps: true });
+const receptionFormSchema = new mongoose.Schema({
+  receivedTool: {
+    type: String,
+    required: true,
+  },
+  receptionNumber: {
+    type: String,
+    required: true,
+  },
+  plate: {
+    type: String,
+    required: true,
+  },
+  issueDescription: {
+    type: [String], 
+    required: true,
+  },
+  owner: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  //added by engineer
+  issueDiscovered: {
+    type: [String], 
+    required: false,
+  },
+  issueSolved: {
+    type: [String], 
+    required: false,
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'In Progress', 'Completed', 'Uncompleted', 'Returned to Owner'],
+    default: 'Pending',
+  },
+  image: {
+    type: String, // Path to the uploaded image file
+  },
+}, {
+  timestamps: true
+});
 
-module.exports = mongoose.model('FuelOperation', FuelOperationSchema);
+module.exports = mongoose.model('ReceptionData', receptionFormSchema);
