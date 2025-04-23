@@ -46,6 +46,8 @@ const handleLogout = async () => {
 
       <ul>
         <li onClick={() => handleLinkClick('adminoverview')}><FaHome /> Overview</li>
+        <li onClick={() => handleLinkClick('view_reception_records')}><FaHome />Reception Records</li>
+        <li onClick={() => handleLinkClick('reception_data_report')}><FaHome />Report</li>
         <u><h3>Admin settings</h3></u>
         <li onClick={() => handleLinkClick('view-Users')}><FaUser  /> Users</li>
         <li onClick={() => handleLinkClick('user-roles')}><FaHome /> User Roles</li>

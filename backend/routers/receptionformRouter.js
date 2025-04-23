@@ -73,7 +73,7 @@ router.get('/view-completed-task/:userId', async (req, res) => {
     const forms = await ReceptionForm.find({
       status: { $in: ['In Progress','Completed', 'Uncompleted'] },
       issueDiscoveredBy: userId
-    });
+    }).sort({ createdAt: -1 });
     res.status(200).json(forms);
   } catch (error) {
     console.error("Error fetching completed tasks:", error);

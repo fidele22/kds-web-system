@@ -7,8 +7,7 @@ import AdminOverview from './AdminOverview';
 import ViewUser  from './user/users';
 import UserRole from './roles/viewRoles';
 import ViewS from './service/ViewServices';
-import ViewP from './position/viewPosition';
-import ViewD from './department/viewDepartment';
+import ViewReceptionRecords from './receptionData/viewReceptionRecords';
 import UserProfile from '../UserProfile/profile';
 import './css/adminDashboard.css';
 import HelpCenter from '../helpcenter/helpcenter';
@@ -31,10 +30,8 @@ const AdminDashboard = () => {
         return <UserRole />;
       case 'view-service':
         return <ViewS />;
-      case 'view-position':
-        return <ViewP />;
-      case 'view-department':
-        return <ViewD />;
+      case 'view_reception_records':
+        return <ViewReceptionRecords />;
       case 'user-profile':
         return <UserProfile />;
       case 'help-center':

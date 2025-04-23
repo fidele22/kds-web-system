@@ -38,8 +38,8 @@ textarea:focus {
 }
 
 .pagination-btn button{
-  display: block;
   width: 100px;
+  display: flex;
   padding: 0.2rem;
   background-color: #3498db;
   color: white;
