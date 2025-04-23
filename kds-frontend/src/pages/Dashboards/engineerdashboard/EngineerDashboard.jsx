@@ -4,7 +4,7 @@ import Footer from '../footer/Footer';
 import LeftNavbar from '../navsidebar/leftNavigationbar';
 import UserProfile from '../UserProfile/profile';
 import Overview from './Overview';
-import IssueDiscovered from './repairTool/addissueDiscovered';
+import ViewAddedData from './repairTool/addissueDiscovered';
 import ViewTask from './repairTool/viewreceptiondata';
 import './engineerDashboard.css';
 
@@ -44,9 +44,9 @@ const EngineerDashboard = () => {
     switch (currentPage) {
       case 'overview':
         return <Overview />;
+      case 'View_added_data':
+        return <ViewAddedData />
       case 'add_issue_discovered':
-        return <IssueDiscovered />
-      case 'view_task':
         return <ViewTask />  
       case 'user-profile':
         return <UserProfile />;

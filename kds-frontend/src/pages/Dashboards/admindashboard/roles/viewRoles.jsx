@@ -18,8 +18,8 @@ const ViewPosition = () => {
     'view_overview',
     'fill_reception_form',
     'veiw_reception_data',
-    'add_issuediscovered_data',
-    'view_reception_task',
+    'add_issue_discovered',
+    'view_added_data',
 
   
 

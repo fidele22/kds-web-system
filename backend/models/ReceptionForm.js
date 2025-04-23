@@ -5,7 +5,7 @@ const receptionFormSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  receptionNumber: {
+  receivedToolNumber: {
     type: String,
     required: true,
   },
@@ -32,6 +32,16 @@ const receptionFormSchema = new mongoose.Schema({
   },
   issueSolved: {
     type: [String], 
+    required: false,
+  },
+  issueDiscoveredBy: {
+    type: mongoose.Schema.Types.ObjectId, // or String if you store user name
+    ref: 'User', // optional: reference to a User model
+    required: false,
+  },
+  issueSolvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: false,
   },
   status: {

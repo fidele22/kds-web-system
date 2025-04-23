@@ -11,7 +11,22 @@ const statusOptions = {
   'Completed': ['Returned to Owner'],
   'Uncompleted': ['Returned to Owner'],
 };
-
+const getStatusBadgeClass = (status) => {
+  switch (status) {
+    case 'Pending':
+      return 'status-badge status-pending';
+    case 'In Progress':
+      return 'status-badge status-in-progress';
+    case 'Completed':
+      return 'status-badge status-completed';
+    case 'Uncompleted':
+      return 'status-badge status-uncompleted';
+    case 'Returned to Owner':
+      return 'status-badge status-returned';
+    default:
+      return 'status-badge';
+  }
+};
 const ReceptionList = () => {
   const [data, setData] = useState([]);
   const [ownerSearch, setOwnerSearch] = useState('');
@@ -36,32 +51,10 @@ const ReceptionList = () => {
 
   const fetchReceptionData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/reception-form/view-receptionForm');
+      const response = await axios.get('http://localhost:5000/api/reception-form/view-pending-task');
       setData(response.data);
     } catch (error) {
       console.error('Error fetching reception data:', error);
-    }
-  };
-
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      await axios.put(`http://localhost:5000/api/reception-form/${id}`, { status: newStatus });
-      alert('Status updated successfully!');
-      fetchReceptionData();
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
-  };
-
-  const getAvailableStatusOptions = (currentStatus) => {
-    if (userRole === 'RECEPTIONIST') {
-      if (currentStatus === 'Completed' || currentStatus === 'Uncompleted') {
-        return ['Returned to Owner'];
-      } else {
-        return [];
-      }
-    } else {
-      return statusOptions[currentStatus] || [];
     }
   };
 
@@ -79,8 +72,17 @@ const ReceptionList = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    const userId = sessionStorage.getItem('userId'); // assuming it's stored
+  
     try {
-      await axios.put(`http://localhost:5000/api/reception-form/add-checkup-data/${editingEntry._id}`, editingEntry);
+      await axios.put(
+        `http://localhost:5000/api/reception-form/add-checkup-data/${editingEntry._id}`,
+        {
+          ...editingEntry,
+          issueDiscoveredBy: userId,
+          issueSolvedBy: userId
+        }
+      );
       alert('Reception data updated successfully!');
       setEditingEntry(null);
       fetchReceptionData();
@@ -88,6 +90,7 @@ const ReceptionList = () => {
       console.error('Error updating reception form:', error);
     }
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -145,8 +148,9 @@ const ReceptionList = () => {
   };
 
   return (
-    <div className="reception-list-container">
+    <div className="engineer-reception-list">
       <h2>Reception Records</h2>
+     <div className="reception-records">
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
         <div>
@@ -193,31 +197,31 @@ const ReceptionList = () => {
           </select>
         </div>
       </div>
-
-      <table className="reception-table">
+      <div className="table-scroll-container">
+      <table className="engineer-reception-table">
         <thead>
           <tr>
             <th>#</th>
             <th>Date</th>
             <th>Received Tool</th>
-            <th>Plate</th>
+            <th>Received Tool N°</th>
+            <th>Plaque</th>
             <th>Owner</th>
             <th>Phone</th>
             <th>Issue Description</th>
             <th>Image</th>
             <th>Status</th>
-            <th>Update Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {paginatedData.length > 0 ? paginatedData.map((entry, index) => {
-            const options = getAvailableStatusOptions(entry.status);
             return (
               <tr key={entry._id}>
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
                 <td>{entry.receivedTool}</td>
+                <td>{entry.receivedToolNumber}</td>
                 <td>{entry.plate}</td>
                 <td>{entry.owner}</td>
                 <td>{entry.phoneNumber}</td>
@@ -243,28 +247,18 @@ const ReceptionList = () => {
                     View Photo
                   </button>
                 </td>
-                <td>{entry.status}</td>
                 <td>
-                  {options.length > 0 ? (
-                    <select
-                      defaultValue=""
-                      onChange={(e) => handleStatusChange(entry._id, e.target.value)}
-                    >
-                      <option value="" disabled>Choose status</option>
-                      {options.map((status) => (
-                        <option key={status} value={status}>{status}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <span style={{ color: 'gray', fontSize: '12px' }}>No actions</span>
-                  )}
+            <span className={getStatusBadgeClass(entry.status)}>
+             {entry.status}
+            </span>
                 </td>
+       
                 <td>
                   <button
                     onClick={() => handleEditClick(entry)}
                     style={{
-                      backgroundColor: 'orange',
-                      color: '#fff',
+                      backgroundColor: 'pink',
+                      color: 'black',
                       border: 'none',
                       padding: '5px 10px',
                       borderRadius: '5px',
@@ -283,8 +277,8 @@ const ReceptionList = () => {
           )}
         </tbody>
       </table>
-
-      <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+</div>
+      <div className='pagination-btn' style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
         <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
           Previous
         </button>
@@ -293,52 +287,53 @@ const ReceptionList = () => {
           Next
         </button>
       </div>
-
+ </div>
       {/* Overlay Edit Form */}
       {editingEntry && (
-        <div className="overlay">
-          <div className="overlay-content">
-            <h3>Edit Reception Entry</h3>
-            <form onSubmit={handleEditSubmit}>
+      <div className="editingEntry-overlay">
+      <div className="engineer-editingEntry-form">
+        <h3>Add issue discovered and solved</h3>
+        <form className='editreception-form' onSubmit={handleEditSubmit}>
+          
+          {/* Info Display Grid */}
+          <div className="entry-details-grid">
+            <div className="entry-detail">
               <label>Received Tool:</label>
-              <input name="receivedTool" value={editingEntry.receivedTool} onChange={handleEditChange} />
-
-              <label>Plate:</label>
-              <input name="plate" value={editingEntry.plate} onChange={handleEditChange} />
-
+              <p>{editingEntry.receivedTool}</p>
+            </div>
+            <div className="entry-detail">
+              <label>Received Tool Number:</label>
+              <p>{editingEntry.receivedToolNumber || "N/A"} </p>
+            </div>
+            <div className="entry-detail">
+              <label>Plaque:</label>
+              <p>{editingEntry.plate || "N/A"}</p>
+            </div>
+            <div className="entry-detail">
               <label>Owner:</label>
-              <input name="owner" value={editingEntry.owner} onChange={handleEditChange} />
-
-              <label>Phone Number:</label>
-              <input name="phoneNumber" value={editingEntry.phoneNumber} onChange={handleEditChange} />
-
-           
-     <label>Issue Discovered (auto-numbered):</label>
-        <textarea
-          name="issueDiscovered"
-          value={getFormattedIssueText()}
-          onChange={handleInputChange}
-          rows="6"
-          placeholder="Describe issues discovered, one per line"
-          required
-        ></textarea>
-                 
-     <label>Issue Solved (auto-numbered):</label>
-        <textarea
-          name="issueSolved"
-          value={getFormattedIssueSolvedText()}
-          onChange={handleInputChange}
-          rows="6"
-          placeholder="Describe issues discovered, one per line"
-          required
-        ></textarea>
-              <div style={{ marginTop: '10px' }}>
-                <button type="submit">Save</button>
-                <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px' }}>Cancel</button>
-              </div>
-            </form>
+              <p>{editingEntry.owner}</p>
+            </div>
           </div>
-        </div>
+    
+          {/* Editable Fields */}
+          <label>Issue Discovered (auto-numbered):</label>
+          <textarea
+            name="issueDiscovered"
+            value={getFormattedIssueText()}
+            onChange={handleInputChange}
+            rows="6"
+            placeholder="Describe issues discovered, one per line"
+          ></textarea>
+    
+       
+          <div className='editentry-btn' style={{ marginTop: '10px' }}>
+            <button type="submit">Save</button>
+            <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px' }}>Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
       )}
     </div>
   );

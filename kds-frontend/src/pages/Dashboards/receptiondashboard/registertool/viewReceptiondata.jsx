@@ -10,6 +10,22 @@ const statusOptions = {
   'Completed': ['Returned to Owner'],
   'Uncompleted': ['Returned to Owner'],
 };
+const getStatusBadgeClass = (status) => {
+  switch (status) {
+    case 'Pending':
+      return 'status-badge status-pending';
+    case 'In Progress':
+      return 'status-badge status-in-progress';
+    case 'Completed':
+      return 'status-badge status-completed';
+    case 'Uncompleted':
+      return 'status-badge status-uncompleted';
+    case 'Returned to Owner':
+      return 'status-badge status-returned';
+    default:
+      return 'status-badge';
+  }
+};
 
 const ReceptionList = () => {
   const [data, setData] = useState([]);
@@ -94,7 +110,9 @@ const ReceptionList = () => {
   return (
     <div className="reception-list-container">
       <h2>Reception Records</h2>
+    <div className="reception-records-data">
 
+    
       <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
         <div>
           <label>Date:</label><br />
@@ -139,14 +157,16 @@ const ReceptionList = () => {
           </select>
         </div>
       </div>
-
+      <div className="table-scroll-container">
       <table className="reception-table">
+     
         <thead>
           <tr>
             <th>#</th>
             <th>Date</th>
             <th>Received Tool</th>
-            <th>Plate</th>
+            <th>received Tool N°</th>
+            <th>Plaque</th>
             <th>Owner</th>
             <th>Phone</th>
             <th>Issue Description</th>
@@ -163,6 +183,7 @@ const ReceptionList = () => {
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
                 <td>{entry.receivedTool}</td>
+                <td>{entry.receivedToolNumber}</td>
                 <td>{entry.plate}</td>
                 <td>{entry.owner}</td>
                 <td>{entry.phoneNumber}</td>
@@ -183,12 +204,18 @@ const ReceptionList = () => {
                       padding: '5px 10px',
                       borderRadius: '5px',
                       cursor: 'pointer',
+                      fontSize:'12px'
                     }}
                   >
                     View Photo
                   </button>
                 </td>
-                <td>{entry.status}</td>
+                <td>
+            <span className={getStatusBadgeClass(entry.status)}>
+             {entry.status}
+            </span>
+                </td>
+
                 <td>
                   {options.length > 0 ? (
                     <select
@@ -213,8 +240,8 @@ const ReceptionList = () => {
           )}
         </tbody>
       </table>
-
-      <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+      </div>
+      <div className='pagination-btn' style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
         <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
           Previous
         </button>
@@ -222,6 +249,8 @@ const ReceptionList = () => {
         <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
           Next
         </button>
+      </div>
+     
       </div>
     </div>
   );

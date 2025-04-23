@@ -76,6 +76,7 @@ router.post('/login', async (req, res) => {
    res.json({ 
   token, 
   role: user.role.name,  // Ensure the user document has a 'role' field
+  _id: user._id,
   privileges: user.role.privileges || [] // Add privileges if needed
 });
   } catch (error) {

@@ -20,7 +20,7 @@ router.post('/send-receptionForm', upload.single('image'), async (req, res) => {
   try {
     const {
       receivedTool,
-      receptionNumber,
+      receivedToolNumber,
       plate,
       issueDescription,
       owner,
@@ -30,7 +30,7 @@ router.post('/send-receptionForm', upload.single('image'), async (req, res) => {
 
     const form = new ReceptionForm({
       receivedTool,
-      receptionNumber,
+      receivedToolNumber,
       plate,
       issueDescription: JSON.parse(issueDescription), // since frontend sends it as stringified array
       owner,
@@ -56,6 +56,31 @@ router.get('/view-receptionForm', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch forms', error: err });
   }
 });
+// GET: Fetch only "In Progress" forms
+router.get('/view-pending-task', async (req, res) => {
+  try {
+    const forms = await ReceptionForm.find({ status: 'Pending', }).sort({ createdAt: -1 });
+    res.json(forms);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch forms', error: err });
+  }
+});
+// GET: Fetch completed tasks discovered by specific user
+router.get('/view-completed-task/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const forms = await ReceptionForm.find({
+      status: { $in: ['In Progress','Completed', 'Uncompleted'] },
+      issueDiscoveredBy: userId
+    });
+    res.status(200).json(forms);
+  } catch (error) {
+    console.error("Error fetching completed tasks:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 //updating status make
 const statusTransitions = {
@@ -106,12 +131,12 @@ router.put('/add-checkup-data/:id', async (req, res) => {
     owner,
     phoneNumber,
     issueDiscovered,
-    issueSolved
-    // Don't destructure `status` to avoid using the one from the frontend
+    issueSolved,
+    issueDiscoveredBy,
+    issueSolvedBy,
   } = req.body;
 
   try {
-    // Always set status to "In Progress" when updating
     const updatedData = {
       receivedTool,
       plate,
@@ -119,6 +144,8 @@ router.put('/add-checkup-data/:id', async (req, res) => {
       phoneNumber,
       issueDiscovered,
       issueSolved,
+      issueDiscoveredBy,
+      issueSolvedBy,
       status: 'In Progress'
     };
 
@@ -138,5 +165,6 @@ router.put('/add-checkup-data/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error while updating reception form' });
   }
 });
+
 
 module.exports = router;

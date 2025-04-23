@@ -42,7 +42,7 @@ const LoginSignup = () => {
     if (!email) newErrors.email = 'Email is required';
     if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
     if (!password) newErrors.password = 'Password is required';
-    if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    if (password.length < 2) newErrors.password = 'Password must be at least 2 characters';
     if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
 
     setErrors(newErrors);
@@ -105,10 +105,11 @@ const LoginSignup = () => {
         setIsLoggedIn(true);
         document.body.classList.add('logged-in');
 
-        const { token, role, privileges } = res.data;
+        const { token, role,_id, privileges } = res.data;
         const tabId = Date.now() + Math.random().toString(36);
         sessionStorage.setItem(`token_${tabId}`, token);
         sessionStorage.setItem(`privileges_${tabId}`, JSON.stringify(privileges));
+        sessionStorage.setItem('userId', _id); // ✅ Add this line
         sessionStorage.setItem('role', role);  // Save the role here
         sessionStorage.setItem('currentTab', tabId);
 

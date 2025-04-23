@@ -1,92 +1,112 @@
-form {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: #fff;
+.engineer-reception-list{
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e6ecec;
+  min-height: 100vh;
 }
-
-form h2 {
+.engineer-reception-list h2 {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 19px;
+  color: #333;
 }
 
-input[type="text"],
-input[type="file"],
+.reception-records{
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+.reception-records input[type="text"],
 input[type="number"],
-textarea {
+select
+ {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.3rem .3rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: .9rem;
   transition: border-color 0.3s ease-in-out;
 }
 
-input:focus,
+.reception-records input:focus,
 textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+  border-color: #314c61;
+  box-shadow: 0 0 5px rgba(53, 70, 80, 0.2);
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-button[type="submit"] {
+.pagination-btn button{
   display: block;
-  width: 100%;
-  padding: 0.9rem;
+  width: 100px;
+  padding: 0.2rem;
   background-color: #3498db;
   color: white;
   font-size: 1rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-
-button[type="submit"]:hover {
-  background-color: #2980b9;
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
 }
+
+.status-pending {
+  background-color: #ffc107; /* yellow */
+  color: #000;
+}
+
+.status-in-progress {
+  background-color: #17a2b8; /* blue */
+  color: white;
+}
+
+.status-completed {
+  background-color: #28a745; /* green */
+  color: white;
+}
+
+.status-uncompleted {
+  background-color: #dc3545; /* red */
+  color: white;
+}
+
+.status-returned {
+  background-color: #6c757d; /* gray */
+  color: white;
+}
+
 
 
 /* css of veiw reception data component */
-.reception-list-container {
-  padding: 2rem;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-}
 
-.reception-list-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
 
-.reception-table {
+.engineer-reception-table {
   width: 100%;
   border-collapse: collapse;
+ 
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.reception-table th,
-.reception-table td {
+.engineer-reception-table th,
+.engineer-reception-table td {
   border: 1px solid #ccc;
   padding: 0.8rem;
+  font-size: 13px;
   text-align: left;
   vertical-align: top;
 }
 
-.reception-table th {
-  background-color: #1d3557;
+.engineer-reception-table th {
+  background-color: #4f5761;
   color: white;
 }
 
@@ -95,7 +115,7 @@ button[type="submit"]:hover {
   height: auto;
   border-radius: 6px;
 }
-.overlay {
+.editingEntry-overlay{
   position: fixed;
   top: 0;
   left: 0;
@@ -108,12 +128,104 @@ button[type="submit"]:hover {
   z-index: 1000;
 }
 
-.overlay-content {
+.engineer-editingEntry-form{
   background: white;
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
+  height: auto;
+}
+.engineer-editingEntry-form form{
+  margin:0%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.engineer-editingEntry-form h3{
+  text-align: center;
+  margin-bottom: 0;
+}
+.engineer-editingEntry-form label{
+ font-size: 15px; 
+}
+.entry-details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.entry-detail {
+  flex: 1 1 45%;
+}
+
+.entry-detail label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.entry-detail p {
+  margin: 0;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.editreception-form {
+  max-width: 600px;
+  margin: 1rem auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.editentry-btn{
+  display: flex;
+
+}
+.editentry-btn button{
+  width: 100px;
+  padding: 5px;
+  cursor: pointer;
+}
+/* drop down menu on table */
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.action-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  padding: 8px;
+  min-width: 120px;
+}
+
+.dropdown-menu button,
+.dropdown-menu select {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 /* responsiveness */

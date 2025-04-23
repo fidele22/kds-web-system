@@ -5,7 +5,7 @@ import './receptionform.css';
 const ReceptionForm = () => {
   const [formData, setFormData] = useState({
     receivedTool: '',
-    receptionNumber: '',
+    receivedToolNumber: '',
     plate: '',
     issueDescription: [''],
     owner: '',
@@ -37,7 +37,7 @@ const ReceptionForm = () => {
 
     const payload = new FormData();
     payload.append('receivedTool', formData.receivedTool);
-    payload.append('receptionNumber', formData.receptionNumber);
+    payload.append('receivedToolNumber', formData.receivedToolNumber);
     payload.append('plate', formData.plate);
     payload.append('owner', formData.owner);
     payload.append('phoneNumber', formData.phoneNumber);
@@ -52,7 +52,7 @@ const ReceptionForm = () => {
       alert('Form submitted successfully!');
       setFormData({
         receivedTool: '',
-        receptionNumber: '',
+        receivedToolNumber: '',
         plate: '',
         issueDescription: [''],
         owner: '',
@@ -67,9 +67,9 @@ const ReceptionForm = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="reception-form-container">
       <h2>Garage Reception Form</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form  className='reception-form' onSubmit={handleSubmit} encType="multipart/form-data">
         <label>Received Tool:</label>
         <input
           type="text"
@@ -79,11 +79,11 @@ const ReceptionForm = () => {
           required
         />
 
-        <label>Reception Number:</label>
+        <label>received Tool Number:</label>
         <input
           type="text"
-          name="receptionNumber"
-          value={formData.receptionNumber}
+          name="receivedToolNumber"
+          value={formData.receivedToolNumber}
           onChange={handleInputChange}
           required
         />
@@ -128,7 +128,7 @@ const ReceptionForm = () => {
         <label>Upload Image (Optional):</label>
         <input type="file" name="image" accept="image/*" onChange={handleInputChange} />
 
-        <button type="submit">Submit</button>
+        <button type="submit">Save data</button>
       </form>
     </div>
   );

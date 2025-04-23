@@ -1,20 +1,28 @@
-form {
+
+/* css of reception form to register client */
+.reception-form-container{
+  background-color: #ebecec;
+}
+.reception-form-container h2{
+  text-align: center;
+}
+.reception-form-container form {
   max-width: 600px;
   margin: 2rem auto;
   background: #fff;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-form h2 {
+.reception-form h2 {
   text-align: center;
   color: #2c3e50;
   margin-bottom: 1.5rem;
 }
 
-input[type="text"],
+.reception-form input[type="text"],
 input[type="file"],
 input[type="number"],
 textarea {
@@ -27,19 +35,67 @@ textarea {
   transition: border-color 0.3s ease-in-out;
 }
 
-input:focus,
+.reception-form input:focus,
 textarea:focus {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
 }
 
-textarea {
+.reception-form textarea {
   resize: vertical;
   min-height: 80px;
 }
+.reception-form button{
+  font-size: 15px;
+  padding: 7px;
+}
+.reception-form button[type="submit"]:hover {
+  background-color: #2980b9;
+}
 
-button[type="submit"] {
+/* css of view reception records on reception dashboard */
+.reception-records-data{
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+.reception-records-data input[type="text"],
+input[type="number"],
+select
+ {
+  width: 100%;
+  padding: 0.3rem .3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: .9rem;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.reception-records-data input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #314c61;
+  box-shadow: 0 0 5px rgba(53, 70, 80, 0.2);
+}
+
+.pagination-btn button{
+  display: block;
+  width: 100px;
+  padding: 0.2rem;
+  background-color: #3498db;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.reception-list-container button[type="submit"] {
   display: block;
   width: 100%;
   padding: 0.9rem;
@@ -51,16 +107,46 @@ button[type="submit"] {
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-
-button[type="submit"]:hover {
-  background-color: #2980b9;
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
 }
+
+.status-pending {
+  background-color: #ffc107; /* yellow */
+  color: #000;
+}
+
+.status-in-progress {
+  background-color: #17a2b8; /* blue */
+  color: white;
+}
+
+.status-completed {
+  background-color: #28a745; /* green */
+  color: white;
+}
+
+.status-uncompleted {
+  background-color: #dc3545; /* red */
+  color: white;
+}
+
+.status-returned {
+  background-color: #6c757d; /* gray */
+  color: white;
+}
+
 
 
 /* css of veiw reception data component */
 .reception-list-container {
   padding: 2rem;
-  background-color: #f9f9f9;
+  background-color: #e6ecec;
   min-height: 100vh;
 }
 
@@ -68,6 +154,13 @@ button[type="submit"]:hover {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #333;
+}
+.table-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .reception-table {
@@ -81,12 +174,13 @@ button[type="submit"]:hover {
 .reception-table td {
   border: 1px solid #ccc;
   padding: 0.8rem;
+  font-size: 13px;
   text-align: left;
   vertical-align: top;
 }
 
 .reception-table th {
-  background-color: #1d3557;
+  background-color: #4f5761;
   color: white;
 }
 
