@@ -71,6 +71,17 @@ const LeftNavbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
             <span><FaBoxOpen /></span> View added data
           </li>
         )}
+        {/* supposed to on accountant  */}
+        {privileges.includes('view_report') && (
+          <li className={activePage === 'monthly_report' ? 'active' : ''} onClick={() => handleNavigation('monthly_report')}>
+            <span><FaBoxOpen /></span> Monthy report
+          </li>
+        )}
+        {privileges.includes('view_monthly_paid_Summary') && (
+          <li className={activePage === 'paid_monthly_summary' ? 'active' : ''} onClick={() => handleNavigation('paid_monthly_summary')}>
+            <span><FaBoxOpen /></span> Monthy Paid Summary
+          </li>
+        )}
       </ul>
 
       <h2>Setting</h2>

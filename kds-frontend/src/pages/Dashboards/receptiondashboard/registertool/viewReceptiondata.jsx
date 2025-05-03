@@ -59,7 +59,7 @@ const ReceptionList = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/reception-form/${id}`, { status: newStatus });
+      await axios.put(`http://localhost:5000/api/reception-form/updated-status/${id}`, { status: newStatus });
       alert('Status updated successfully!');
       fetchReceptionData();
     } catch (error) {

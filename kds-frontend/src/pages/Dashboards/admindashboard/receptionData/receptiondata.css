@@ -148,6 +148,7 @@
     padding: 2rem;
     background-color: #e6ecec;
     min-height: 100vh;
+    margin-bottom: 1rem;
   }
   
   .reception-list-container h2 {
@@ -188,6 +189,151 @@
     width: 100px;
     height: auto;
     border-radius: 6px;
+  }
+  /* css of sytling view  add payment info component */
+  /* For fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.50); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .overlay-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  }
+  
+  .overlay-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .error-text {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }  
+  .cancel-btn {
+    background-color: #ccc;
+  }
+
+  /*css of styling receptiondata full details  */
+  .reception-detail-view {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: auto;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-btn {
+    margin-bottom: 20px;
+    background-color: #004aad;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .back-btn:hover {
+    background-color: #00367d;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .left-column,
+  .right-column {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    margin: 8px 0;
+  }
+  
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 8px;
+  }
+  
+  .view-image-link {
+  
+    text-decoration: none;
+  }
+  
+  .view-image-link:hover {
+   
+  }
+  
+  /* Status Tag Styling */
+  .status {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+  }
+  
+  .status.pending {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .status.completed {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .status.in-progress {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .status.rejected {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
   }
   
   /* responsiveness */

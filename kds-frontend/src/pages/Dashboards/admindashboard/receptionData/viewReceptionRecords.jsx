@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaBars  } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
+import ReceptionDetailView from './veiwFullDetaols';
 import 'react-datepicker/dist/react-datepicker.css';
 import './receptiondata.css';
 
 const statusOptions = {
   'Pending': ['In Progress'],
   'In Progress': ['Completed', 'Uncompleted'],
-  'Completed': ['Returned to Owner'],
+  'Completed': ['Paid', 'UnPaid', 'In Progress'],
+  'Paid': ['Returned to Owner'],
+  'UnPaid': ['Paid'],
   'Uncompleted': ['Returned to Owner'],
 };
 const getStatusBadgeClass = (status) => {
@@ -35,6 +38,10 @@ const ReceptionList = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [dropdownOpenId, setDropdownOpenId] = useState(null);
+
+  const [showDetailView, setShowDetailView] = useState(false);
+  const [selectedReception, setSelectedReception] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -70,7 +77,7 @@ const ReceptionList = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/reception-form/${id}`, { status: newStatus });
+      await axios.put(`http://localhost:5000/api/reception-form/updated-status/${id}`, { status: newStatus });
       alert('Status updated successfully!');
       fetchReceptionData();
     } catch (error) {
@@ -79,12 +86,12 @@ const ReceptionList = () => {
   };
 
   const getAvailableStatusOptions = (currentStatus) => {
-    if (userRole === 'RECEPTIONIST') {
-      if (currentStatus === 'Completed' || currentStatus === 'Uncompleted') {
-        return ['Returned to Owner'];
-      } else {
-        return [];
-      }
+    if (userRole === 'ADMIN') {
+      if (currentStatus === 'Completed' || currentStatus === 'UnPaid') return ['Paid', 'UnPaid', 'In Progress'];
+      return [];
+    } else if (userRole === 'RECEPTIONIST') {
+      if (currentStatus === 'Paid' || currentStatus === 'Uncompleted') return ['Returned to Owner'];
+      return [];
     } else {
       return statusOptions[currentStatus] || [];
     }
@@ -121,7 +128,24 @@ const ReceptionList = () => {
   const toggleDropdownMenu = (id) => {
     setDropdownOpenId(prev => prev === id ? null : id);
   };
+// clicking on see more button 
 
+  const handleSeeMoreClick = (entry) => {
+
+    setSelectedReception(entry);
+
+    setShowDetailView(true);
+
+  };
+
+
+  const handleBack = () => {
+
+    setShowDetailView(false);
+
+    setSelectedReception(null);
+
+  };
   return (
     <div className="reception-list-container">
       <h2>Reception Records</h2>
@@ -236,17 +260,18 @@ const ReceptionList = () => {
                    <button onClick={() => toggleDropdownMenu(entry._id)}><FaBars /></button>
                    {dropdownOpenId === entry._id && (
                       <div className="dropdown-menu">
-                      <button >See More</button>
+                        <button onClick={() => handleSeeMoreClick(entry)}>See More</button>
                       {options.length > 0 ? (
-                        <select
-                          defaultValue=""
-                          onChange={(e) => handleStatusChange(entry._id, e.target.value)}
-                        >
-                          <option value="" disabled>Choose status</option>
-                          {options.map((status) => (
-                            <option key={status} value={status}>{status}</option>
-                          ))}
-                        </select>
+                           <select
+                           defaultValue=""
+                           onChange={(e) => handleStatusChange(entry._id, e.target.value)}
+                         >
+                           <option value="" disabled>Choose status</option>
+                           {options.map((status) => (
+                             <option key={status} value={status}>{status}</option>
+                           ))}
+
+                         </select>
                       ) : (
                         <span style={{ color: 'gray', fontSize: '12px' }}>No actions</span>
                       )}
@@ -277,6 +302,20 @@ const ReceptionList = () => {
       </div>
      
       </div>
+      {/* displaying reception details */}
+      {showDetailView && (
+
+<div className="full-details-overlay">
+
+  <div className="full-details-overlay-content">
+
+    <ReceptionDetailView data={selectedReception} onBack={handleBack} />
+
+  </div>
+
+</div>
+
+)}
     </div>
   );
 };

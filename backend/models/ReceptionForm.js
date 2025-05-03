@@ -44,9 +44,21 @@ const receptionFormSchema = new mongoose.Schema({
     ref: 'User',
     required: false,
   },
+  amountPaid: {
+    type: Number,
+    required: false,
+    default:'0'
+  },
+  paymentMethod: {
+    type: String,
+    enum: ['Non Applicable','Cash', 'Mobile Money', 'Bank Transfer', 'Other'], // customize as needed
+    required: false,
+    default: 'Non Applicable'
+  },
+  
   status: {
     type: String,
-    enum: ['Pending', 'In Progress', 'Completed', 'Uncompleted', 'Returned to Owner'],
+    enum: ['Pending', 'In Progress', 'Completed', 'Uncompleted', 'Paid', 'UnPaid', 'Returned to Owner'],
     default: 'Pending',
   },
   image: {

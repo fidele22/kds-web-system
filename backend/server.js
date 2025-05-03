@@ -17,7 +17,8 @@ app.use(express.urlencoded({ extended: true }));
  const userdata = require ('./routers/userData');
  const userRoleRoutes = require ('./routers/userRolesRoute');
  const receptionForm = require ('./routers/receptionformRouter');
- 
+ const receptionDataReport = require('./routers/reportGeneration')
+ const stockToolRouter = require('./routers/stockToolRouter');
 
 
 
@@ -45,8 +46,9 @@ app.use(session({
  app.use('/api/userdata', userdata);
  app.use('/api/roles', userRoleRoutes);
  app.use('/api/reception-form', receptionForm);
+ app.use('/api/monthlyRecord-Report', receptionDataReport)
 
-
+ app.use('/api/stockTool', stockToolRouter)
 // router toggout 
 
 // Logout route
@@ -61,6 +63,7 @@ app.post('/api/logout', (req, res) => {
 });
 
 app.use('/photos', express.static(path.join(__dirname, 'photos')));
+app.use('/stockimage', express.static(path.join(__dirname, 'stockimage')));
 
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {

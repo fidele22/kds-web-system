@@ -86,15 +86,18 @@ router.get('/view-completed-task/:userId', async (req, res) => {
 const statusTransitions = {
   'Pending': ['In Progress'],
   'In Progress': ['Completed', 'Uncompleted'],
-  'Completed': ['Returned to Owner'],
-  'Uncompleted': ['Returned to Owner'],
-  'Returned to Owner': [],
+  'Completed': ['Paid', 'UnPaid'],
+  'UnPaid': ['Paid'],
+  'Paid': ['Returned to Owner'],
+  'Uncompleted': ['Returned to Owner']
 };
 
-router.put('/:id', async (req, res) => {
+
+router.put('/updated-status/:id', async (req, res) => {
   const { status } = req.body;
 
   try {
+    console.log('Incoming status:', req.body.status); // Debug here
     const form = await ReceptionForm.findById(req.params.id);
     if (!form) {
       return res.status(404).json({ message: 'Form not found' });
@@ -106,13 +109,23 @@ router.put('/:id', async (req, res) => {
     }
 
     form.status = status;
+    // If paymentMethod is missing, set it to default
+    if (!form.paymentMethod) {
+      form.paymentMethod = 'Non Applicable';
+    }
+
+    console.log('Saving status as:', form.status);
     await form.save();
+    console.log('Saved successfully!');
+    
     res.status(200).json({ message: 'Status updated successfully' });
   } catch (error) {
     console.error('Status update error:', error);
     res.status(500).json({ message: 'Error updating status' });
   }
 });
+
+
 // GET /api/reception-form/:id
 router.get('/get-reception-form/:id', async (req, res) => {
   try {
@@ -163,6 +176,25 @@ router.put('/add-checkup-data/:id', async (req, res) => {
   } catch (error) {
     console.error('Error updating reception form:', error);
     res.status(500).json({ message: 'Server error while updating reception form' });
+  }
+});
+
+
+// updating reception records with add amount payment info
+router.put('/payment-info/:id', async (req, res) => {
+  const { id } = req.params;
+  const { amountPaid, paymentMethod } = req.body;
+
+  try {
+    const updated = await ReceptionForm.findByIdAndUpdate(id, {
+      amountPaid,
+      paymentMethod,
+    }, { new: true });
+
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error updating payment info' });
   }
 });
 

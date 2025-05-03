@@ -20,6 +20,8 @@ const ViewPosition = () => {
     'veiw_reception_data',
     'add_issue_discovered',
     'view_added_data',
+    'view_report',
+    'view_monthly_paid_Summary',
 
   
 

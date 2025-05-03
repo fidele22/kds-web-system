@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link  } from 'react-router-dom';
 import axios from 'axios';
 import './LoginSignup.css';
 
@@ -210,8 +210,8 @@ const LoginSignup = () => {
                 {errors.password && <span className="error">{errors.password}</span>}
               </div>
               <button onClick={handleLogin}>Sign in</button>
-              <p>
-                <b>Forgot password?</b>
+              <p className="forgot-password-text">
+                 <b><Link to="/forgot-password">Forgot Password?</Link></b>
               </p>
               <p>
                 <span>Don't have an account?</span>

@@ -66,7 +66,7 @@ const ReceptionList = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/reception-form/${id}`, { status: newStatus });
+      await axios.put(`http://localhost:5000/api/reception-form/updated-status/${id}`, { status: newStatus });
       alert('Status updated successfully!');
       fetchReceptionData();
     } catch (error) {
@@ -338,19 +338,12 @@ const ReceptionList = () => {
                          {options.length > 0 ? (
 
                            <select
-
                              defaultValue=""
-
                              onChange={(e) => handleStatusChange(entry._id, e.target.value)}
-
                            >
-
                              <option value="" disabled>Choose status</option>
-
                              {options.map((status) => (
-
                                <option key={status} value={status}>{status}</option>
-
                              ))}
 
                            </select>

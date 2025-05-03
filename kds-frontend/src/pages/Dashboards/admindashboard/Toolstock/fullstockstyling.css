@@ -1,0 +1,111 @@
+
+  .stock-detail-modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 5rem;
+    display: flex;
+    width:auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+ .stock-detail-modal h4{
+    color: rgb(92, 90, 87);
+    padding: 20px;
+ } 
+.stock-data p{
+  text-align: left;
+
+}
+.stock-detail-overlay button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .stock-data a {
+    text-decoration: none;
+    color: rgb(70, 152, 228);
+    font-size: 16px;
+  }
+  
+  .view-image-button:hover {
+    background-color: #218838;
+  }
+  .tool-image img{
+    width: 150px;
+    height: 150px;
+  }
+.stock-history-table{
+    border-collapse: collapse;
+}
+.stock-history-table th,td{
+    border: 1px solid #dee2e6;
+    padding: 9px;
+    text-align: left;
+    font-size: 13px;   
+}
+  /* stock report css */
+.monthly-report-container{
+    padding: 20px;
+    background-color: #e6ecec; 
+}
+.monthly-report-container h3{
+    text-align: center;
+    padding: 20px;
+}
+  .monthly-stock-report {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    width: auto;
+    margin: 20px;
+    background-color: white;
+  }
+  
+  .filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  select, button {
+    padding: 6px 12px;
+    font-size: 16px;
+  }
+  
+  button {
+    background: #0a75c2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .stock-report-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .stock-report-table th,
+  .stock-report-table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  
+  .stock-report-table th {
+    background-color: #4e4e4e;
+    color: white;
+  }
+  
+  

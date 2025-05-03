@@ -8,6 +8,7 @@ function TopNavbar({ setCurrentPage, toggleNav,isNavVisible}) {
   const [user, setUser ] = useState({}); // Initialize user as an empty object
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const tabId = sessionStorage.getItem('currentTab');
   const token = sessionStorage.getItem(`token_${tabId}`);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -100,6 +101,7 @@ function TopNavbar({ setCurrentPage, toggleNav,isNavVisible}) {
    
         </li>
       </ul>
+    
     </div>
   );
 }

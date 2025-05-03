@@ -14,15 +14,11 @@
   z-index: 2;
 }
 
-.adminavbar.open {
-  transform: translateX(0);
-}
-
 .nav-logo{
   background-color: #3e8cda;
   border-radius: 30%;
 }
-.adminavbar h3 {
+.navigation h3 {
   padding: 5px;
   font-size: 20px;
   color:rgb(206, 224, 224);

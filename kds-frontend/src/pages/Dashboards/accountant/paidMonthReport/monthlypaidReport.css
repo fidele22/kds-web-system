@@ -1,0 +1,82 @@
+.paid-monthly-report {
+    padding: 20px;
+    background-color: #e6ecec;
+  }
+  .paid-monthly-summary{
+
+  }
+  .report-generation {
+    margin-top: 20px;
+  }
+  
+  .summary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .report-table th,
+  .report-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .report-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  .paid-summary-filters{
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+  
+  .paid-summary-filters input{
+  padding: 0.3rem .3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: .9rem;
+  transition: border-color 0.3s ease-in-out;
+  }
+   .paid-summary-filters select {
+    padding: 6px;
+    width: 30%;
+    min-width: 200px;
+  }
+  
+  .report-generation button {
+    padding: 7px 10px;
+    background-color: #3498db; /* Blue color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 13px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .report-generation button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: scale(1.05);
+  }
+  
+  .report-generation button:active {
+    background-color: #1f6391; /* Even darker on click */
+    transform: scale(0.98);
+  }
+  .summary-info{
+    display: flex;
+    gap: 5rem; 
+  }
+  .summary-info div{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    padding: 20px;
+    margin-bottom: 1rem;
+  }

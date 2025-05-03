@@ -11,6 +11,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   password: { type: String, required: true },
+
+  // for resting password
+resetPasswordToken: String,
+resetPasswordExpires: Date,
+
 });
 
 module.exports = mongoose.model('Users ', UserSchema);
