@@ -11,10 +11,14 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   password: { type: String, required: true },
-
+  twoFAEnabled: {
+    type: Boolean,
+    default: true, // or false if you want it off by default
+  },
+  
   // for resting password
-resetPasswordToken: String,
-resetPasswordExpires: Date,
+  twoFACode: String,
+  twoFACodeExpires: Date,
 
 });
 

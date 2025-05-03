@@ -5,6 +5,7 @@ import './Navigationbar.css';
 
 const Navbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
   const navRef = useRef(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [activePage, setActivePage] = useState('');
 
   const handleLinkClick = (page) => {
@@ -26,20 +27,20 @@ const Navbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
   }, [isVisible, closeNav]);
 
   // logout function
-const handleLogout = async () => {
-  try {
-    await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/logout`);
-    sessionStorage.clear();
-    window.location.href = '/';
-    window.history.pushState(null, null, '/');
-    window.onpopstate = () => {
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/logout`);
+      sessionStorage.clear();
       window.location.href = '/';
-    };
-  } catch (error) {
-    console.error('Error during logout:', error);
-    alert('Error while logging out');
-  }
-};
+      window.history.pushState(null, null, '/');
+      window.onpopstate = () => {
+        window.location.href = '/';
+      };
+    } catch (error) {
+      console.error('Error during logout:', error);
+      alert('Error while logging out');
+    }
+  };
   return (
     <div ref={navRef} className={`navigation ${isVisible ? 'active' : 'hidden'}`}>
 
@@ -63,11 +64,23 @@ const handleLogout = async () => {
         <li className={activePage === 'help-center' ? 'active' : ''} onClick={() => handleLinkClick('help-center')}><FaBurn /> Help Center</li>
         
       </ul>
-         <div className='logout-btn'>
-                  <li onClick={handleLogout}>
-                                  <FaSignOutAlt color='black' /> Logout
-                                </li>
-              </div>
+        <div className='logout-btn'>
+               <li onClick={() => setShowLogoutConfirm(true)}>
+                 <FaSignOutAlt color='black' /> Logout
+               </li>
+             </div>
+                   {/* Logout confirmation modal */}
+      {showLogoutConfirm && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Are you sure you want to logout?</p>
+            <div className="modal-buttons">
+              <button className='confirm-logout' onClick={handleLogout}>Yes</button>
+              <button className='cancel-logout' onClick={() => setShowLogoutConfirm(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

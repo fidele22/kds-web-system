@@ -69,3 +69,5 @@ app.use('/stockimage', express.static(path.join(__dirname, 'stockimage')));
  app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
  });
+
+ 

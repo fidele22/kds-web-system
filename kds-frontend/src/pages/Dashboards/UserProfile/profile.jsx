@@ -11,6 +11,8 @@ const UserProfile = () => {
   const tabId = sessionStorage.getItem('currentTab');
   const token = sessionStorage.getItem(`token_${tabId}`); // Get the token for the current tab
 
+  const [twoFAEnabled, setTwoFAEnabled] = useState(user.twoFAEnabled);
+
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 const [currentPassword, setCurrentPassword] = useState('');
 const [newPassword, setNewPassword] = useState('');
@@ -38,6 +40,25 @@ const [confirmPassword, setConfirmPassword] = useState('');
 
     fetchUser ();
   }, [token]);
+
+   const handleToggle2FA = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/api/authentication/enable-disable-2`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTwoFAEnabled(response.data.twoFAEnabled);
+      Swal.fire('Success', response.data.message, 'success');
+    } catch (err) {
+      console.error('Error toggling 2FA:', err);
+      Swal.fire('Error', 'Could not update 2FA preference', 'error');
+    }
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -223,6 +244,20 @@ const [confirmPassword, setConfirmPassword] = useState('');
     </form>
   )}
 </div>
+<hr />
+<div className="form-group switch-group">
+  <label>Two-Factor Authentication:</label>
+  <label className="switch">
+    <input
+      type="checkbox"
+      checked={twoFAEnabled}
+      onChange={handleToggle2FA}
+    />
+    <span className="slider round"></span>
+  </label>
+  <span className="switch-label">{twoFAEnabled ? 'Enabled' : 'Disabled'}</span>
+</div>
+
 
     </div>
   );

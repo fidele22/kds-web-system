@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate,Link  } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './LoginSignup.css';
 
@@ -12,9 +12,10 @@ const images = [image1, image2, image3];
 const LoginSignup = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showOTP, setShowOTP] = useState(false);
   const [otp, setOTP] = useState('');
-
+  const [showOTP, setShowOTP] = useState(false);
+  const [email, setEmail] = useState('');
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -102,40 +103,51 @@ const LoginSignup = () => {
       try {
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/authentication/login`, { phone: formData.phone, password: formData.password });
         console.log('Login response:', res.data);
-        setIsLoggedIn(true);
-        document.body.classList.add('logged-in');
-
-        const { token, role,_id, privileges } = res.data;
-        const tabId = Date.now() + Math.random().toString(36);
-        sessionStorage.setItem(`token_${tabId}`, token);
-        sessionStorage.setItem(`privileges_${tabId}`, JSON.stringify(privileges));
-        sessionStorage.setItem('userId', _id); // ✅ Add this line
-        sessionStorage.setItem('role', role);  // Save the role here
-        sessionStorage.setItem('currentTab', tabId);
-
-        switch (role) {
-          case 'ADMIN':
-            navigate('/admin-dashboard');
-            break;
-          case 'RECEPTIONIST':
-            navigate('/receptionist');
-            break;
-          case 'ACCOUNTANT':
-            navigate('/accountant');
-            break;
-          case 'ENGINEER':
-            navigate('/engineer');
-            break;
-          case 'CLIENT':
-            navigate('/client');
-            break;
-          default:
-            navigate('/');
+        if (res.data.requires2FA) {
+          navigate('/verify-otp', { state: { email: res.data.email } });
+        } else {
+          proceedWithLogin(res.data);
         }
+        
       } catch (err) {
         console.error('Login error:', err);
         alert('Invalid phone number or password');
       }
+    }
+  };
+
+ 
+
+  const proceedWithLogin = (data) => {
+    setIsLoggedIn(true);
+    document.body.classList.add('logged-in');
+
+    const { token, role, _id, privileges } = data;
+    const tabId = Date.now() + Math.random().toString(36);
+    sessionStorage.setItem(`token_${tabId}`, token);
+    sessionStorage.setItem(`privileges_${tabId}`, JSON.stringify(privileges));
+    sessionStorage.setItem('userId', _id); // ✅ Add this line
+    sessionStorage.setItem('role', role);  // Save the role here
+    sessionStorage.setItem('currentTab', tabId);
+
+    switch (role) {
+      case 'ADMIN':
+        navigate('/admin-dashboard');
+        break;
+      case 'RECEPTIONIST':
+        navigate('/receptionist');
+        break;
+      case 'ACCOUNTANT':
+        navigate('/accountant');
+        break;
+      case 'ENGINEER':
+        navigate('/engineer');
+        break;
+      case 'CLIENT':
+        navigate('/client');
+        break;
+      default:
+        navigate('/');
     }
   };
 
@@ -211,7 +223,7 @@ const LoginSignup = () => {
               </div>
               <button onClick={handleLogin}>Sign in</button>
               <p className="forgot-password-text">
-                 <b><Link to="/forgot-password">Forgot Password?</Link></b>
+                 <Link to="/forgot-password">Forgot Password?</Link>
               </p>
               <p>
                 <span>Don't have an account?</span>
@@ -222,6 +234,7 @@ const LoginSignup = () => {
         </div>
       </div>
 
+ 
       <div className="row content-row">
         <div className="col align-items-center flex-col">
           <div className="text sign-in">

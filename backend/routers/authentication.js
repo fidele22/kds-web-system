@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const Role = require('../models/userRoles');
+const sendEmail = require('../2FA/sendmailcode'); 
 const authMiddleware = require('../middlewares/userAthu');
 const router = express.Router();
 
@@ -72,18 +73,100 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
-   res.json({ 
-  token, 
-  role: user.role.name,  // Ensure the user document has a 'role' field
-  _id: user._id,
-  privileges: user.role.privileges || [] // Add privileges if needed
+    // If 2FA is enabled, generate and send code
+    if (user.twoFAEnabled) {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      user.twoFACode = code;
+      user.twoFACodeExpires = new Date(Date.now() + 10 * 60 * 1000); // valid for 10 mins
+      await user.save();
+
+      await sendEmail(
+        user.email,
+        'Your 2FA Code',
+        `Dear ${user.firstName?.toUpperCase() || 'User'},\n\nUse this code to confirm your account (${code}).\n\nCheers,\nKigali diesel service Team`
+      );
+
+      return res.status(200).json({ 
+        message: '2FA code sent to email', 
+        requires2FA: true,
+        email: user.email,
+        userId: user._id  // optionally return this to reference in next step
+      });
+    }
+
+    // If 2FA is NOT enabled → proceed with login
+    const payload = {
+      id: user.role._id,
+      name: user.role.name
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' });
+
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role.name, // ✅ send role as string
+        phone: user.phone
+      }
+    });
+    
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
+
+//to send code sent to email to be verified
+router.post('/verify-2fa', async (req, res) => {
+  const { email, code } = req.body;
+
+  try {
+    const user = await User.findOne({ email }).populate('role');
+    if (
+      !user || 
+      String(user.twoFACode) !== String(code) || 
+      user.twoFACodeExpires < Date.now()
+    ) {
+      return res.status(400).json({ message: 'Invalid or expired code' });
+    }
+
+    // Clear 2FA code
+    user.twoFACode = undefined;
+    user.twoFACodeExpires = undefined;
+    await user.save();
+
+    // Now generate token and return user info
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
+
+    res.json({
+      token,
+      role: user.role.name,
+      _id: user._id,
+      privileges: user.role.privileges || [],
+      message: '2FA verified successfully',
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
+// PUT /api/authentication/toggle-2fa
+router.put('/enable-disable-2fa', authMiddleware, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  user.twoFAEnabled = !user.twoFAEnabled;
+  await user.save();
+
+  res.json({ message: `2FA ${user.twoFAEnabled ? 'enabled' : 'disabled'}`, twoFAEnabled: user.twoFAEnabled });
+});
 
 //router to fetch user profile data
 // Get User Profile
@@ -137,56 +220,5 @@ router.put('/change-password', authMiddleware, async (req, res) => {
 });
 
 
-// const twilio = require('twilio');
-// const client = new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-// // Temporary store for OTPs (use Redis for production)
-// const otpStore = new Map();
-
-// router.post('/login', async (req, res) => {
-//   const { phone, password } = req.body;
-//   try {
-//     const user = await User.findOne({ phone }).populate('role');
-//     if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-//     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-//     otpStore.set(phone, otp);
-
-//     // Send OTP
-//     await client.messages.create({
-//       body: `Your OTP is ${otp}`,
-//       to: `+25${phone}`, // Assuming Rwandan phone format
-//       from: process.env.TWILIO_PHONE_NUMBER,
-//     });
-
-//     return res.status(200).json({ message: 'OTP sent to your phone', phone });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
-
-// router.post('/verify-otp', async (req, res) => {
-//   const { phone, otp } = req.body;
-//   const storedOtp = otpStore.get(phone);
-
-//   if (!storedOtp || storedOtp !== otp) {
-//     return res.status(400).json({ message: 'Invalid or expired OTP' });
-//   }
-
-//   otpStore.delete(phone); // Remove OTP after successful verification
-
-//   const user = await User.findOne({ phone }).populate('role');
-//   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
-
-//   return res.json({
-//     token,
-//     role: user.role.name,
-//     privileges: user.role.privileges || []
-//   });
-// });
 
 module.exports = router;
