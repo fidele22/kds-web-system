@@ -85,15 +85,17 @@ const ReceptionForm = () => {
           name="receivedToolNumber"
           value={formData.receivedToolNumber}
           onChange={handleInputChange}
+            placeholder='Enter Tool Number or N/A if not applicable'
           required
         />
 
-        <label>Plate Number:</label>
+        <label>Plaque Number:</label>
         <input
           type="text"
           name="plate"
           value={formData.plate}
           onChange={handleInputChange}
+          placeholder='Enter Plaque or N/A if not applicable'
           required
         />
 

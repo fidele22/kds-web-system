@@ -72,7 +72,7 @@ router.get('/fetchUsers', async (req, res) => {
 // GET: Count forms grouped by status
 router.get('/status-summary-overview', async (req, res) => {
   try {
-    const allStatuses = ['Pending', 'In Progress', 'Completed', 'Uncompleted', 'Paid', 'UnPaid', 'Returned to Owner'];
+    const allStatuses = ['Pending', 'In Progress', 'Completed', 'Uncompleted', 'Paid', 'UnPaid'];
 
     const rawSummary = await ReceptionForm.aggregate([
       {

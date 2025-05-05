@@ -3,7 +3,7 @@ import { FaHome, FaBars, FaTimes } from 'react-icons/fa';
 import Navbar from './adminNavbar/Navigationbar';
 import Navigation from '../navbar/TopNavbar';
 import Footer from '../footer/Footer';
-import AdminOverview from './AdminOverview';
+import AdminOverview from './adminOverview/AdminOverview';
 import ViewUser  from './user/users';
 import UserRole from './roles/viewRoles';
 import ReceptionDataReport from './Report/viewReport';

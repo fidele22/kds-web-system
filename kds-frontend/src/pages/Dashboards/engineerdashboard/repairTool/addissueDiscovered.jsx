@@ -32,6 +32,7 @@ const ReceptionList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [editingEntry, setEditingEntry] = useState(null);
   const [dropdownOpenId, setDropdownOpenId] = useState(null);
+  const isReadOnly = editingEntry?.status === 'Completed';
 
   const itemsPerPage = 5;
 
@@ -64,7 +65,20 @@ const ReceptionList = () => {
     }
   };
 
-  const handleStatusChange = async (id, newStatus) => {
+
+  const handleStatusChange = async (id, newStatus, entry) => {
+    if (entry.status === 'In Progress' && newStatus === 'Completed' || newStatus === 'Uncompleted' ) {
+      if (!entry.issueSolved || entry.issueSolved.length === 0) {
+        alert('Cannot mark as Completed: Issue Solved must be filled before.');
+        return;
+      }
+    }
+  
+    if (entry.status === 'Completed') {
+      alert('Cannot update a record already marked as Completed.');
+      return;
+    }
+  
     try {
       await axios.put(`http://localhost:5000/api/reception-form/updated-status/${id}`, { status: newStatus });
       alert('Status updated successfully!');
@@ -73,6 +87,7 @@ const ReceptionList = () => {
       console.error('Error updating status:', error);
     }
   };
+  
 
   const getAvailableStatusOptions = (currentStatus) => {
     if (userRole === 'ENGINEER') {
@@ -132,13 +147,10 @@ const ReceptionList = () => {
     if (name === 'issueDiscovered') {
 
       const lines = value.split('\n').map((line) => line.replace(/^\d+\.\s*/, ''));
-
       setEditingEntry((prev) => ({ ...prev, issueDiscovered: lines }));
 
     } else if (name === 'issueSolved') {
-
       const lines = value.split('\n').map((line) => line.replace(/^\d+\.\s*/, ''));
-
       setEditingEntry((prev) => ({ ...prev, issueSolved: lines }));
 
     } else {
@@ -310,12 +322,13 @@ const ReceptionList = () => {
                         backgroundColor: '#007bff',
                         color: '#fff',
                         border: 'none',
+                        fontSize:'12px',
                         padding: '5px 10px',
                         borderRadius: '5px',
                         cursor: 'pointer',
                       }}
                     >
-                      View Photo
+                      Photo
                     </button>
                   </td>
                   <td>
@@ -333,13 +346,14 @@ const ReceptionList = () => {
                       {dropdownOpenId === entry._id && (
                          <div className="dropdown-menu">
 
-                         <button onClick={() => handleEditClick(entry)}>Edit</button>
+                         <button onClick={() => handleEditClick(entry)} style={{color:'black'}} >Edit</button>
 
                          {options.length > 0 ? (
 
                            <select
                              defaultValue=""
-                             onChange={(e) => handleStatusChange(entry._id, e.target.value)}
+                             onChange={(e) => handleStatusChange(entry._id, e.target.value, entry)}
+   
                            >
                              <option value="" disabled>Choose status</option>
                              {options.map((status) => (
@@ -380,13 +394,9 @@ const ReceptionList = () => {
            {/* Overlay Edit Form */}
 
            {editingEntry && (
-
 <div className="editingEntry-overlay">
-
   <div className="engineer-editingEntry-form">
-
     <h3>Add issue discovered and solved</h3>
-
     <form className='editreception-form' onSubmit={handleEditSubmit}>
 
       {/* Info Display Grid */}
@@ -394,33 +404,19 @@ const ReceptionList = () => {
       <div className="entry-details-grid">
 
         <div className="entry-detail">
-
           <label>Received Tool:</label>
-
           <p>{editingEntry.receivedTool}</p>
-
         </div>
-
         <div className="entry-detail">
-
           <label>Received Tool Number:</label>
-
           <p>{editingEntry.receivedToolNumber || "N/A"} </p>
-
         </div>
-
         <div className="entry-detail">
-
           <label>Plaque:</label>
-
           <p>{editingEntry.plate || "N/A"}</p>
-
         </div>
-
         <div className="entry-detail">
-
           <label>Owner:</label>
-
           <p>{editingEntry.owner}</p>
 
         </div>
@@ -433,32 +429,20 @@ const ReceptionList = () => {
       <label >Issue Discovered (auto-numbered):</label>
 
       <textarea
-
         name="issueDiscovered"
-
         value={getFormattedIssueText()}
-
         onChange={handleInputChange}
-
         rows="6"
-
         placeholder="Describe issues discovered, one per line"
-
         readOnly
 
       ></textarea>
-
-
       <label>Issue Solved (auto-numbered):</label>
-
       <textarea
-
         name="issueSolved"
-
         value={getFormattedIssueSolvedText()}
-
         onChange={handleInputChange}
-
+        readOnly={isReadOnly}
         rows="6"
 
         placeholder="Describe issues solved, one per line"
@@ -468,9 +452,8 @@ const ReceptionList = () => {
 
       <div className='editentry-btn' style={{ marginTop: '10px' }}>
 
-        <button type="submit">Save</button>
-
-        <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px' }}>Cancel</button>
+      <button type="submit" disabled={isReadOnly}>Save</button>
+      <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px', backgroundColor:'#b62d2d'}}>Cancel</button>
 
       </div>
 

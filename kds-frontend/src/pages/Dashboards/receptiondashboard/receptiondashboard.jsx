@@ -2,12 +2,12 @@ import React, { useState, useEffect,useRef } from 'react';
 import TopNavigation from '../navbar/TopNavbar';
 import Footer from '../footer/Footer';
 import LeftNavbar from '../navsidebar/leftNavigationbar';
-import Overview from './Overview';
+import Overview from '../engineerdashboard/oveview/Overview';
 import UserProfile from '../UserProfile/profile'
-import './receptionDashboard.css';
+import HelpCenter from '../helpcenter/helpcenter'
 import ReceptionForm from './registertool/receptionForm';
 import ReceptionData from './registertool/viewReceptiondata';
-
+import './receptionDashboard.css';
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState('overview');
@@ -50,6 +50,8 @@ const Dashboard = () => {
           return <ReceptionForm />
       case 'view_reception_data':
           return <ReceptionData />
+      case 'help_center':
+          return <HelpCenter />    
   
       default:
         return <Overview />;

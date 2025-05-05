@@ -35,7 +35,7 @@ const ReceptionList = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [editingEntry, setEditingEntry] = useState(null);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     getUserRoleFromSession();
@@ -83,7 +83,7 @@ const ReceptionList = () => {
           issueSolvedBy: userId
         }
       );
-      alert('Reception data updated successfully!');
+      alert('Issue discovered added successfully!');
       setEditingEntry(null);
       fetchReceptionData();
     } catch (error) {
@@ -239,12 +239,13 @@ const ReceptionList = () => {
                       backgroundColor: '#007bff',
                       color: '#fff',
                       border: 'none',
+                      fontSize:'12px',
                       padding: '5px 10px',
                       borderRadius: '5px',
                       cursor: 'pointer',
                     }}
                   >
-                    View Photo
+                    Photo
                   </button>
                 </td>
                 <td>
@@ -328,7 +329,7 @@ const ReceptionList = () => {
        
           <div className='editentry-btn' style={{ marginTop: '10px' }}>
             <button type="submit">Save</button>
-            <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px' }}>Cancel</button>
+            <button type="button" onClick={handleEditCancel} style={{ marginLeft: '10px', backgroundColor:'#b62d2d' }}>Cancel</button>
           </div>
         </form>
       </div>

@@ -100,19 +100,14 @@ router.post('/login', async (req, res) => {
       name: user.role.name
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
 
-    res.status(200).json({
-      message: 'Login successful',
+    res.json({
       token,
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role.name, // ✅ send role as string
-        phone: user.phone
-      }
+      role: user.role.name,
+      _id: user._id,
+      privileges: user.role.privileges || [],
+      message: '2FA verified successfully',
     });
     
 

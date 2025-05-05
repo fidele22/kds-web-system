@@ -106,7 +106,34 @@ const LoginSignup = () => {
         if (res.data.requires2FA) {
           navigate('/verify-otp', { state: { email: res.data.email } });
         } else {
-          proceedWithLogin(res.data);
+           // Proceed with login
+      const { token, role, _id, privileges } = res.data;
+      const tabId = Date.now() + Math.random().toString(36);
+      sessionStorage.setItem(`token_${tabId}`, token);
+      sessionStorage.setItem(`privileges_${tabId}`, JSON.stringify(privileges));
+      sessionStorage.setItem('userId', _id);
+      sessionStorage.setItem('role', role);
+      sessionStorage.setItem('currentTab', tabId);
+
+      switch (role) {
+        case 'ADMIN':
+          navigate('/admin-dashboard');
+          break;
+        case 'RECEPTIONIST':
+          navigate('/receptionist');
+          break;
+        case 'ACCOUNTANT':
+          navigate('/accountant');
+          break;
+        case 'ENGINEER':
+          navigate('/engineer');
+          break;
+        case 'CLIENT':
+          navigate('/client');
+          break;
+        default:
+          navigate('/');
+      }
         }
         
       } catch (err) {

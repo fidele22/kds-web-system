@@ -127,7 +127,7 @@ textarea:focus {
 }
 
 .status-completed {
-  background-color: #28a745; /* green */
+  background-color: #799207; /* green */
   color: white;
 }
 
@@ -135,7 +135,14 @@ textarea:focus {
   background-color: #dc3545; /* red */
   color: white;
 }
-
+.status-paid{
+  background-color: #28a745;
+  color: white;
+}
+.status-unpaid{
+  background-color: #9c0c3c;
+  color: white;
+}
 .status-returned {
   background-color: #6c757d; /* gray */
   color: white;

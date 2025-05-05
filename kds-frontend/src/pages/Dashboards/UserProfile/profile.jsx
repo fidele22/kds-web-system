@@ -44,7 +44,7 @@ const [confirmPassword, setConfirmPassword] = useState('');
    const handleToggle2FA = async () => {
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/api/authentication/enable-disable-2`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/authentication/enable-disable-2fa`,
         {},
         {
           headers: {

@@ -53,7 +53,7 @@ const ReceptionDetailView = ({ data, onBack }) => {
             rel="noopener noreferrer"
             className="view-image-link"
           >
-            View Photo
+            Photo
           </a></label>
 
           {/* addpayment information */}

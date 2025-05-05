@@ -58,7 +58,7 @@ const LeftNavbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
         )}
         {privileges.includes('veiw_reception_data') && (
           <li className={activePage === 'view_reception_data' ? 'active' : ''} onClick={() => handleNavigation('view_reception_data')}>
-            <span><FaBoxOpen /></span> View reception data
+            <span><FaBoxOpen /></span> Reception data
           </li>
         )}
         {privileges.includes('add_issue_discovered') && (
@@ -82,13 +82,14 @@ const LeftNavbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
             <span><FaBoxOpen /></span> Monthy Paid Summary
           </li>
         )}
-      </ul>
+    
 
-      <h2>Setting</h2>
-      <ol>
-        <li onClick={() => handleNavigation('user-profile')}><FaUser /> Profile</li>
-        <li onClick={() => handleNavigation('help-center')}><FaBurn /> Help Center</li>
-
+      <h3>Setting</h3>
+     
+        <li  className={activePage === 'user-profile' ? 'active' : ''}  onClick={() => handleNavigation('user-profile')}><FaUser /> Profile</li>
+        <li className={activePage === 'help_center' ? 'active' : ''} onClick={() => handleNavigation('help_center')}><FaBurn /> Help Center</li>
+        </ul>
+        <ol>
         <div className='logout-btn'>
           <li onClick={() => setShowLogoutConfirm(true)}>
             <FaSignOutAlt color='black' /> Logout

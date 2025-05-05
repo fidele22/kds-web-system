@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './overview.css';
+import './oveviewadmin.css';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts';
-import './overview.css';
+
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#00C49F', '#FFBB28', '#FF4444'];
 const StatusOverview = () => {
@@ -57,7 +57,7 @@ const StatusOverview = () => {
   return (
     <div>
       {!loading && user && (
-        <div className="welcome-box">
+        <div className="admin-welcome-box">
           <h2>👋 Welcome back, <span>{user.lastName}</span>!</h2>
           <p>We're glad to see you again. Here's an overview of company work statuses.</p>
         </div>

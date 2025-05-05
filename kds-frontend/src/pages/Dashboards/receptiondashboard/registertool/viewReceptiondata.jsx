@@ -7,7 +7,9 @@ import './receptionform.css';
 const statusOptions = {
   'Pending': ['In Progress'],
   'In Progress': ['Completed', 'Uncompleted'],
-  'Completed': ['Returned to Owner'],
+  'Completed': ['Paid', 'UnPaid', 'In Progress'],
+  'Paid': ['Returned to Owner'],
+  'UnPaid': ['Paid'],
   'Uncompleted': ['Returned to Owner'],
 };
 const getStatusBadgeClass = (status) => {
@@ -20,6 +22,10 @@ const getStatusBadgeClass = (status) => {
       return 'status-badge status-completed';
     case 'Uncompleted':
       return 'status-badge status-uncompleted';
+    case 'Paid':
+      return 'status-badge status-paid';
+    case 'UnPaid':
+          return 'status-badge status-unpaid';  
     case 'Returned to Owner':
       return 'status-badge status-returned';
     default:
@@ -34,7 +40,7 @@ const ReceptionList = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     getUserRoleFromSession();
@@ -69,7 +75,7 @@ const ReceptionList = () => {
 
   const getAvailableStatusOptions = (currentStatus) => {
     if (userRole === 'RECEPTIONIST') {
-      if (currentStatus === 'Completed' || currentStatus === 'Uncompleted') {
+      if (currentStatus === 'Paid' || currentStatus === 'Uncompleted') {
         return ['Returned to Owner'];
       } else {
         return [];
