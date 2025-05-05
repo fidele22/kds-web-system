@@ -16,11 +16,8 @@ router.get('/monthly-report', async (req, res) => {
   
     try {
       const records = await ReceptionForm.find({
-        status: 'Paid',
-        createdAt: {
-          $gte: startDate,
-          $lt: endDate,
-        },
+        createdAt: { $gte: startDate, $lte: endDate },
+        amountPaid: { $nin: [null, 0, '', '0'] }
       });
   
       res.json(records);
@@ -31,47 +28,20 @@ router.get('/monthly-report', async (req, res) => {
   });
 
   // montly paid report summary
-  // Example Node.js (Express) backend route
-router.get('/paid-monthly-report', async (req, res) => {
-  const { month } = req.query;
-  const [year, monthNumber] = month.split('-');
+
+// router.get('/paid-monthly-report', async (req, res) => {
+//   const { month } = req.query;
+//   const [year, monthNumber] = month.split('-');
   
-  const start = new Date(year, monthNumber - 1, 1);
-  const end = new Date(year, monthNumber, 0, 23, 59, 59);
+//   const start = new Date(year, monthNumber - 1, 1);
+//   const end = new Date(year, monthNumber, 0, 23, 59, 59);
 
-  const paidRecords = await ReceptionForm.find({
-    status: 'Paid',
-    createdAt: { $gte: start, $lte: end }
-  });
+//   const paidRecords = await ReceptionForm.find({
+//     createdAt: { $gte: start, $lte: end },
+//     amountPaid: { $exists: true, $ne: null, $ne: 0 }
+//   });
 
-  res.json(paidRecords);
-});
-
-
-//report of stock 
-
-// router.get('/stock-monthly-report', async (req, res) => {
-//   try {
-//     const { month, year } = req.query;
-
-//     if (!month || !year) {
-//       return res.status(400).json({ message: 'Month and year are required' });
-//     }
-
-//     const startDate = new Date(`${year}-${month}-01`);
-//     const endDate = new Date(startDate);
-//     endDate.setMonth(endDate.getMonth() + 1);
-
-//     // Find histories within the given month
-//     const histories = await StockHistory.find({
-//       date: { $gte: startDate, $lt: endDate }
-//     }).populate('itemId', 'name'); // populate only name from item
-
-//     res.json(histories);
-//   } catch (err) {
-//     console.error('Error fetching monthly report:', err);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
+//   res.json(paidRecords);
 // });
 
 

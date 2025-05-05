@@ -25,18 +25,12 @@ const MonthlyReport = () => {
     try {
 
       const response = await fetch(`http://localhost:5000/api/monthlyRecord-Report/monthly-report?month=${month}`);
-
       const data = await response.json();
-
       setRecords(data);
-
-
       const total = data.reduce((sum, item) => sum + (parseFloat(item.amountPaid) || 0), 0);
-
       setTotalAmount(total);
 
     } catch (error) {
-
       console.error('Error fetching monthly report:', error);
 
     }
@@ -56,7 +50,6 @@ const MonthlyReport = () => {
     if (!month) return '';
 
     const [year, monthNumber] = month.split('-');
-
     const date = new Date(year, monthNumber - 1);
 
     const options = { month: 'long', year: 'numeric' };

@@ -75,7 +75,18 @@ const ReceptionList = () => {
     }
   };
 
-  const handleStatusChange = async (id, newStatus) => {
+  const handleStatusChange = async (id, newStatus,entry) => {
+    if (entry.status === 'Completed' && newStatus === 'Paid' || newStatus === 'UnPaid' ) {
+      if (!entry.amountPaid || entry.amountPaid.length === 0) {
+        alert('Cannot mark as paid or unpaid: Issue Solved must be filled before.');
+        return;
+      }
+    }
+
+    if (entry.status === 'Paid') {
+      alert('Cannot update a record already marked as paid.');
+      return;
+    }
     try {
       await axios.put(`http://localhost:5000/api/reception-form/updated-status/${id}`, { status: newStatus });
       alert('Status updated successfully!');
@@ -260,7 +271,7 @@ const ReceptionList = () => {
                    <button onClick={() => toggleDropdownMenu(entry._id)}><FaBars /></button>
                    {dropdownOpenId === entry._id && (
                       <div className="dropdown-menu">
-                        <button onClick={() => handleSeeMoreClick(entry)}>See More</button>
+                        <button onClick={() => handleSeeMoreClick(entry)} style={{color:'black'}} >See More</button>
                       {options.length > 0 ? (
                            <select
                            defaultValue=""
@@ -306,13 +317,9 @@ const ReceptionList = () => {
       {showDetailView && (
 
 <div className="full-details-overlay">
-
   <div className="full-details-overlay-content">
-
     <ReceptionDetailView data={selectedReception} onBack={handleBack} />
-
   </div>
-
 </div>
 
 )}
