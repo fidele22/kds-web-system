@@ -98,7 +98,7 @@ const ReceptionList = () => {
 
   const getAvailableStatusOptions = (currentStatus) => {
     if (userRole === 'ADMIN') {
-      if (currentStatus === 'Completed' || currentStatus === 'UnPaid') return ['Paid', 'UnPaid', 'In Progress'];
+      if (currentStatus === 'Completed' || currentStatus === 'UnPaid') return ['Paid', 'UnPaid'];
       return [];
     } else if (userRole === 'RECEPTIONIST') {
       if (currentStatus === 'Paid' || currentStatus === 'Uncompleted') return ['Returned to Owner'];
@@ -275,7 +275,8 @@ const ReceptionList = () => {
                       {options.length > 0 ? (
                            <select
                            defaultValue=""
-                           onChange={(e) => handleStatusChange(entry._id, e.target.value)}
+                           onChange={(e) => handleStatusChange(entry._id, e.target.value, entry)}
+
                          >
                            <option value="" disabled>Choose status</option>
                            {options.map((status) => (

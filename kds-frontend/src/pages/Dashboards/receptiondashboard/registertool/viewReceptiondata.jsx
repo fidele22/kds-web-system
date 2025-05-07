@@ -213,7 +213,7 @@ const ReceptionList = () => {
                       fontSize:'12px'
                     }}
                   >
-                    View Photo
+                    Photo
                   </button>
                 </td>
                 <td>

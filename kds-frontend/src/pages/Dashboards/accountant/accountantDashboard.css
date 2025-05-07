@@ -4,8 +4,6 @@
   box-sizing: border-box; /* Add this for better box model handling */
 
 }
-
-
 body {
 
   overflow-x: hidden;

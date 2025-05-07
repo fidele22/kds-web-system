@@ -23,10 +23,11 @@
   .report-table td {
     border: 1px solid #ddd;
     padding: 8px;
+    
   }
   
   .report-table th {
-    background-color: #f2f2f2;
+    background-color: #3b3939;
     text-align: left;
   }
   .paid-summary-filters{

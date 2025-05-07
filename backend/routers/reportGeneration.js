@@ -27,23 +27,23 @@ router.get('/monthly-report', async (req, res) => {
     }
   });
 
-  // montly paid report summary
-
-// router.get('/paid-monthly-report', async (req, res) => {
-//   const { month } = req.query;
-//   const [year, monthNumber] = month.split('-');
+  router.get('/paid-monthly-report', async (req, res) => {
+    const { month } = req.query;
+    const [year, monthNumber] = month.split('-');
   
-//   const start = new Date(year, monthNumber - 1, 1);
-//   const end = new Date(year, monthNumber, 0, 23, 59, 59);
-
-//   const paidRecords = await ReceptionForm.find({
-//     createdAt: { $gte: start, $lte: end },
-//     amountPaid: { $exists: true, $ne: null, $ne: 0 }
-//   });
-
-//   res.json(paidRecords);
-// });
-
+    const start = new Date(year, monthNumber - 1, 1);
+    const end = new Date(year, monthNumber, 0, 23, 59, 59);
+  
+    const paidRecords = await ReceptionForm.find({
+      createdAt: { $gte: start, $lte: end },
+      amountPaid: {
+        $nin: [null, 0, '', '0']
+      }
+    });
+  
+    res.json(paidRecords);
+  });
+  
 
 router.get('/stock-monthly-report', async (req, res) => {
   const { month, year } = req.query;

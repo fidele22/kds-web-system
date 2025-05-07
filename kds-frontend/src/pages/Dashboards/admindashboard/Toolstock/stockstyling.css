@@ -222,9 +222,9 @@
   display: block;
 }
 
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
   display: block;
-}
+} */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -269,4 +269,24 @@
   .cancel-partremoved-form:hover{
     background-color: rgb(224, 8, 8);
   }
+  .stock-filter-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  
+  .stock-filter-section 
+    input[type="text"],
+  select
+   {
+    width: 100%;
+    padding: 0.3rem .3rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: .9rem;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
   

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './stockstyling.css';
 import { FaBars } from 'react-icons/fa';
 import StockDetailView from './fullstockdata';
@@ -10,9 +10,14 @@ const ViewStockItems = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [partRemoved, setPartRemoved] = useState('');
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const [selectedItemId, setSelectedItemId] = useState(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  
+  // New state for filtering
+  const [nameFilter, setNameFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
+  const dropdownRef = useRef(null);
   const itemsPerPage = 10;
   const baseImageURL = 'http://localhost:5000/';
 
@@ -30,10 +35,17 @@ const ViewStockItems = () => {
     }
   };
 
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  // Filter items based on name and status
+  const filteredItems = items.filter(item => {
+    const matchesName = item.name.toLowerCase().includes(nameFilter.toLowerCase());
+    const matchesStatus = statusFilter ? item.status === statusFilter : true;
+    return matchesName && matchesStatus;
+  });
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePrev = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -62,24 +74,65 @@ const ViewStockItems = () => {
     }
   };
 
+  const handleRemoveItem = async (itemId) => {
+    const confirm = window.confirm('Are you sure you want to mark this item as removed?');
+    if (!confirm) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/stockTool/update-stock-status/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'removed' }),
+      });
+
+      if (res.ok) {
+        alert('Item marked as removed.');
+        fetchItems(); // refresh the list
+      } else {
+        alert('Failed to update item.');
+      }
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
   const handleSeeMoreStockData = (item) => {
-    console.log('Item clicked:', item); // This is logged correctly
     setSelectedItem(item);
     setShowStockDetailView(true);
   };
-  
-  console.log('Selected Item:', selectedItem); // This will check if selectedItem has updated before passing to the detail view
-  
+
   const handleBack = () => {
     setSelectedItem(null);
     setShowStockDetailView(false);
   };
 
+  const toggleDropdown = (itemId) => {
+    setOpenDropdownId(prevId => (prevId === itemId ? null : itemId));
+  };
+
   return (
     <div className="stock-container">
-      <h2 className="section-title">Stock Items</h2>
+      <h2 className="section-title">Stock of tools</h2>
 
-      {items.length === 0 ? (
+      {/* Filter Inputs */}
+      <div className="stock-filter-section">
+        <input
+          type="text"
+          placeholder="Filter by Name"
+          value={nameFilter}
+          onChange={(e) => setNameFilter(e.target.value)}
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          >
+          <option value="">All Statuses</option>
+          <option value="in-stock">In Stock</option>
+          <option value="removed">Removed</option>
+        </select>
+      </div>
+
+      {filteredItems.length === 0 ? (
         <p>No items found.</p>
       ) : (
         <div className="stock-data-container">
@@ -110,26 +163,49 @@ const ViewStockItems = () => {
                       View Image
                     </a>
                   </td>
-                  <td className="text-capitalize">{item.status}</td>
+                  <td className={item.status === 'in-stock' ? 'status-green' : 'status-red'}>
+                    {item.status}
+                  </td>
                   <td>
-                    <div className="dropdown">
+                    <div className="dropdown" ref={dropdownRef}>
                       <button
                         className="dropbtn"
-                        onClick={() => setDropdownVisible(!dropdownVisible)}
+                        onClick={() => toggleDropdown(item._id)}
                       >
                         <FaBars />
                       </button>
-                      <div className={`dropdown-content ${dropdownVisible ? 'show' : ''}`}>
-                        <button
-                          onClick={() => {
-                            setSelectedItemId(item._id);
-                            setShowForm(true);
-                          }}
-                        >
-                          Add Part
-                        </button>
-                        <button onClick={() => handleSeeMoreStockData(item)}>See More</button>
-                      </div>
+                      {openDropdownId === item._id && (
+                        <div className="dropdown-content show">
+                          <button
+                            onClick={() => {
+                              setSelectedItemId(item._id);
+                              setShowForm(true);
+                              setOpenDropdownId(null); // close dropdown
+                            }}
+                            disabled={item.status === 'removed'}
+                          >
+                            Remove Part
+                          </button>
+                          <hr />
+                          <button
+                            onClick={() => {
+                              handleSeeMoreStockData(item);
+                              setOpenDropdownId(null);
+                            }}
+                          >
+                            See More
+                          </button>
+                          <hr />
+                          <button
+                            onClick={() => {
+                              handleRemoveItem(item._id);
+                              setOpenDropdownId(null);
+                            }}
+                          >
+                            Remove Item
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -163,8 +239,12 @@ const ViewStockItems = () => {
                 placeholder="Part Removed"
                 required
               />
-              <button className='save-partremoved-btn' type="submit">Save</button>
-              <button className='cancel-partremoved-form' type="button" onClick={() => setShowForm(false)}>
+              <button className="save-partremoved-btn" type="submit">Save</button>
+              <button
+                className="cancel-partremoved-form"
+                type="button"
+                onClick={() => setShowForm(false)}
+              >
                 Cancel
               </button>
             </form>
@@ -172,10 +252,9 @@ const ViewStockItems = () => {
         </div>
       )}
 
-{showStockDetailView && selectedItem && (
-  <StockDetailView item={selectedItem} onBack={handleBack} />
-)}
-
+      {showStockDetailView && selectedItem && (
+        <StockDetailView item={selectedItem} onBack={handleBack} />
+      )}
     </div>
   );
 };

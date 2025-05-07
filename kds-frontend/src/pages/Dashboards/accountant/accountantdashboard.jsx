@@ -4,7 +4,7 @@ import Footer from '../footer/Footer';
 import LeftNavbar from '../navsidebar/leftNavigationbar';
 import UserProfile from '../UserProfile/profile';
 import MonthlyReport from './monthReport/viewReport'
-import Overview from './Overview';
+import Overview from '../engineerdashboard/oveview/Overview';
 import './accountantDashboard.css';
 import PaidMonthlySummary from './paidMonthReport/paidmonthlySummary';
 

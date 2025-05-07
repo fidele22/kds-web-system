@@ -38,7 +38,23 @@ router.get('/view-savedTool', async (req, res) => {
     }
   });
   
-  
+  // PUT route to update status and set removed date
+router.put('/update-stock-status/:id', async (req, res) => {
+  const { status } = req.body;
+
+  try {
+    const update = { status };
+    if (status === 'removed') {
+      update.removedAt = new Date();
+    }
+
+    const updatedItem = await StockTool.findByIdAndUpdate(req.params.id, update, { new: true });
+    res.json(updatedItem);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update item status', error });
+  }
+});
+
 
   router.post('/save-part-removed', async (req, res) => {
     const { itemId, partremoved } = req.body;

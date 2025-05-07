@@ -42,6 +42,20 @@ const [confirmPassword, setConfirmPassword] = useState('');
   }, [token]);
 
    const handleToggle2FA = async () => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to ${twoFAEnabled ? 'disable' : 'enable'} Two-Factor Authentication.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, continue',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'custom-swal', // Use custom size
+      },
+    });
+  
+    if (!result.isConfirmed) return;
+  
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_BACKEND_URL}/api/authentication/enable-disable-2fa`,
@@ -53,10 +67,26 @@ const [confirmPassword, setConfirmPassword] = useState('');
         }
       );
       setTwoFAEnabled(response.data.twoFAEnabled);
-      Swal.fire('Success', response.data.message, 'success');
+      Swal.fire({
+        title: 'Success',
+        text: response.data.message,
+        icon: 'success',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'custom-swal',
+        },
+      });
     } catch (err) {
       console.error('Error toggling 2FA:', err);
-      Swal.fire('Error', 'Could not update 2FA preference', 'error');
+      Swal.fire({
+        title: 'Error',
+        text: 'Could not update 2FA preference',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'custom-swal',
+        },
+      });
     }
   };
 

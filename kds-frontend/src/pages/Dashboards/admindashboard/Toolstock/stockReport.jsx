@@ -65,6 +65,7 @@ const MonthlyReport = () => {
               <th>Item Name</th>
               <th>Stored Date</th>
               <th>Status</th>
+              <th>un-stored date</th>
               <th>Part Removed</th>
               <th>Removed Date</th>
             </tr>
@@ -78,7 +79,12 @@ const MonthlyReport = () => {
                       <td rowSpan={group.entries.length}>{groupIndex + 1}</td>
                       <td rowSpan={group.entries.length}>{group.item.name}</td>
                       <td rowSpan={group.entries.length}>{new Date(group.item.createdAt).toLocaleDateString()}</td>
-                      <td rowSpan={group.entries.length}>{group.item.status}</td>
+                      <td rowSpan={group.entries.length} className={group.item.status === 'in-stock' ? 'status-green' : 'status-red'}>
+                        {group.item.status} </td>
+
+                      <td rowSpan={group.entries.length}>
+                       {group.item.removedAt ? new Date(group.item.removedAt).toLocaleDateString() : "-"}  </td>
+
                     </>
                   )}
                   <td>{entry.partremoved}</td>

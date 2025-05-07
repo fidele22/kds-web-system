@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import './receptionform.css';
+import './customAlert.css';
 
 const ReceptionForm = () => {
   const [formData, setFormData] = useState({
@@ -35,6 +37,20 @@ const ReceptionForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+        // Confirmation prompt
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: 'Do you want to submit this form?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, submit it!',
+          cancelButtonText: 'Cancel',
+          customClass: {
+            popup: 'custom-swal', // Apply custom class to the popup
+          }
+        }); 
+        if (!result.isConfirmed) return;
+
     const payload = new FormData();
     payload.append('receivedTool', formData.receivedTool);
     payload.append('receivedToolNumber', formData.receivedToolNumber);
@@ -49,7 +65,15 @@ const ReceptionForm = () => {
       await axios.post('http://localhost:5000/api/reception-form/send-receptionForm', payload, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      alert('Form submitted successfully!');
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Form submitted successfully!',
+        customClass: {
+          popup: 'custom-swal', // Apply custom class to the popup
+        }
+      });
+
       setFormData({
         receivedTool: '',
         receivedToolNumber: '',
@@ -62,7 +86,14 @@ const ReceptionForm = () => {
       });
     } catch (err) {
       console.error('Submission error:', err);
-      alert('Failed to submit form.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: 'Failed to submit form. Please try again.',
+        customClass: {
+          popup: 'custom-swal', // Apply custom class to the popup
+        }
+      });
     }
   };
 

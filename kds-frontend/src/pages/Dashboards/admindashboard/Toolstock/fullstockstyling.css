@@ -108,4 +108,13 @@
     color: white;
   }
   
+  .status-green {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-red {
+    color: red;
+    font-weight: bold;
+  }
   

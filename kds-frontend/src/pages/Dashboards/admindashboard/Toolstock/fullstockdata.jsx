@@ -53,7 +53,7 @@ const StockDetailView = ({ item, onBack }) => {
             </tbody>
           </table>
         ) : (
-          <p>No stock history available for this item.</p>
+          <p>No part removed for this tool.</p>
         )}
         </div>
     
