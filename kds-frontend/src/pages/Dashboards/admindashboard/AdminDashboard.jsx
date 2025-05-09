@@ -11,6 +11,7 @@ import ViewReceptionRecords from './receptionData/viewReceptionRecords';
 import StoreTool from './Toolstock/storeTool';
 import ViewStock from './Toolstock/stockMaterial';
 import StockReportMonthly  from './Toolstock/stockReport';
+import TrackInfo from './searinfo/searchinfo'
 
 import UserProfile from '../UserProfile/profile';
 import './css/adminDashboard.css';
@@ -34,7 +35,8 @@ const AdminDashboard = () => {
         return <ReceptionDataReport />;
       case 'view_reception_records':
         return <ViewReceptionRecords />;
-
+      case 'reception_data_tracker':
+        return <TrackInfo />
       case 'store_tool':
         return <StoreTool />  
       case 'view_stock_materials':

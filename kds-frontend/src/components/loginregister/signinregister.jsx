@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './LoginSignup.css';
 
 import image1 from '../../assets/1.png';
@@ -64,7 +67,7 @@ const LoginSignup = () => {
           password,
         });
 
-        alert(response.data.message);
+        toast.success(response.data.message);
         setFormData({
           firstName: '',
           lastName: '',
@@ -76,11 +79,11 @@ const LoginSignup = () => {
         setErrors({});
       } catch (error) {
         if (error.response) {
-          alert(`Error: ${error.response.status} - ${error.response.data.message}`);
+          toast.error(`Error: ${error.response.status} - ${error.response.data.message}`);
         } else if (error.request) {
-          alert('No response from server. Please try again later.');
+          toast.error('No response from server. Please try again later.');
         } else {
-          alert('Error: ' + error.message);
+          toast.error(error.response?.data?.message || 'Something went wrong.');
         }
       }
     }
@@ -138,45 +141,12 @@ const LoginSignup = () => {
         
       } catch (err) {
         console.error('Login error:', err);
-        alert('Invalid phone number or password');
+        toast.error('Invalid phone number or password');
       }
     }
   };
 
  
-
-  const proceedWithLogin = (data) => {
-    setIsLoggedIn(true);
-    document.body.classList.add('logged-in');
-
-    const { token, role, _id, privileges } = data;
-    const tabId = Date.now() + Math.random().toString(36);
-    sessionStorage.setItem(`token_${tabId}`, token);
-    sessionStorage.setItem(`privileges_${tabId}`, JSON.stringify(privileges));
-    sessionStorage.setItem('userId', _id); // ✅ Add this line
-    sessionStorage.setItem('role', role);  // Save the role here
-    sessionStorage.setItem('currentTab', tabId);
-
-    switch (role) {
-      case 'ADMIN':
-        navigate('/admin-dashboard');
-        break;
-      case 'RECEPTIONIST':
-        navigate('/receptionist');
-        break;
-      case 'ACCOUNTANT':
-        navigate('/accountant');
-        break;
-      case 'ENGINEER':
-        navigate('/engineer');
-        break;
-      case 'CLIENT':
-        navigate('/client');
-        break;
-      default:
-        navigate('/');
-    }
-  };
 
   const toggle = () => {
     setIsSignIn(!isSignIn);
@@ -260,6 +230,10 @@ const LoginSignup = () => {
           </div>
         </div>
       </div>
+      <>
+  {/* Your JSX content */}
+  <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+</>
 
  
       <div className="row content-row">
@@ -277,7 +251,7 @@ const LoginSignup = () => {
         <div className="col align-items-center flex-col">
           <div className="img sign-up"></div>
           <div className="text sign-up">
-            <h2>KDS</h2>
+            
             <p>Join our trusted system for fast, reliable, and affordable diesel car maintenance and repair services. </p>
           </div>
         </div>

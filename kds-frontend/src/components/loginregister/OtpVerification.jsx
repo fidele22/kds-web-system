@@ -1,6 +1,7 @@
 // src/components/VerifyOTP.js
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import './OtpVerification.css';
 
@@ -78,7 +79,7 @@ const handleKeyDown = (e, index) => {
           navigate('/');
       }
     } catch (err) {
-      alert('Invalid or expired OTP');
+     toast.error('Invalid or expired OTP');
     }
   };
 
@@ -107,6 +108,10 @@ const handleKeyDown = (e, index) => {
     
           ))}
         </div>
+              <>
+          {/* Your JSX content */}
+          <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+        </> 
         <div className="verify-buttons">
           <button className="cancel-btn" onClick={() => navigate('/')}>Cancel</button>
           <button onClick={handleOTPVerification}>Verify OTP</button>
@@ -116,6 +121,7 @@ const handleKeyDown = (e, index) => {
         </p>
       </div>
     </div>
+    
   );
 };
 

@@ -46,13 +46,19 @@ const MonthlyReport = () => {
         <button onClick={() => setSelectedYear(prev => prev + 1)}>&raquo;</button>
 
         <select
-          value={selectedMonthIndex}
-          onChange={(e) => setSelectedMonthIndex(parseInt(e.target.value))}
-        >
-          {months.map((month, index) => (
-            <option key={month} value={index}>{month}</option>
-          ))}
-        </select>
+  value={selectedMonthIndex}
+  onChange={(e) => setSelectedMonthIndex(parseInt(e.target.value))}
+>
+  {months.map((month, index) => {
+    const isFutureMonth = selectedYear === today.getFullYear() && index > today.getMonth();
+    return (
+      <option key={month} value={index} disabled={isFutureMonth}>
+        {month}
+      </option>
+    );
+  })}
+</select>
+
 
         <button onClick={generateReport}>Generate</button>
       </div>
@@ -79,11 +85,15 @@ const MonthlyReport = () => {
                       <td rowSpan={group.entries.length}>{groupIndex + 1}</td>
                       <td rowSpan={group.entries.length}>{group.item.name}</td>
                       <td rowSpan={group.entries.length}>{new Date(group.item.createdAt).toLocaleDateString()}</td>
-                      <td rowSpan={group.entries.length} className={group.item.status === 'in-stock' ? 'status-green' : 'status-red'}>
-                        {group.item.status} </td>
-
+                      <td rowSpan={group.entries.length} className={entry.status === 'in-stock' ? 'status-green' : 'status-red'}>
+                        {entry.status}
+                      </td>
                       <td rowSpan={group.entries.length}>
-                       {group.item.removedAt ? new Date(group.item.removedAt).toLocaleDateString() : "-"}  </td>
+                        {entry.removedAt === '—' || !entry.removedAt
+                          ? '—'
+                          : new Date(entry.removedAt).toLocaleDateString()}
+                      </td>
+
 
                     </>
                   )}

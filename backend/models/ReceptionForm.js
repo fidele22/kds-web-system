@@ -36,12 +36,12 @@ const receptionFormSchema = new mongoose.Schema({
   },
   issueDiscoveredBy: {
     type: mongoose.Schema.Types.ObjectId, // or String if you store user name
-    ref: 'User', // optional: reference to a User model
+    ref: 'Users', 
     required: false,
   },
   issueSolvedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Users',
     required: false,
   },
   amountPaid: {
@@ -62,7 +62,7 @@ const receptionFormSchema = new mongoose.Schema({
     default: 'Pending',
   },
   image: {
-    type: String, // Path to the uploaded image file
+    type: String,
   },
 }, {
   timestamps: true

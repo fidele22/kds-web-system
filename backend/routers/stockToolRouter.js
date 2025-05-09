@@ -27,7 +27,7 @@ router.post('/saveTool', upload.single('image'), async (req, res) => {
   });
   
 
-// // Get all items with status
+
 // GET all stock items
 router.get('/view-savedTool', async (req, res) => {
     try {

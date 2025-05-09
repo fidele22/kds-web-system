@@ -303,7 +303,7 @@ body {
     .container::before,
     .container.sign-in::before,
     .container.sign-up::before {
-        height: 100vh;
+        height: 50vh;
         border-bottom-right-radius: 0;
         border-top-left-radius: 0;
         z-index: 0;
@@ -333,6 +333,7 @@ body {
         width: 100%;
         position: absolute;
         padding: 2rem;
+        margin-left: 3rem;
         background-color: var(--white);
         border-top-left-radius: 2rem;
         border-top-right-radius: 2rem;

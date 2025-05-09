@@ -47,8 +47,10 @@ const Navbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
 
       <ul>
         <li className={activePage === 'adminoverview' ? 'active' : ''} onClick={() => handleLinkClick('adminoverview')}> <span><FaHome /></span>Overview</li>
-        <li className={activePage === 'view_reception_records' ? 'active' : ''} onClick={() => handleLinkClick('view_reception_records')}> <span><FaClipboardList /></span>  Reception Records</li>
-        <li className={activePage === 'reception_data_report' ? 'active' : ''} onClick={() => handleLinkClick('reception_data_report')}> <span><FaList /></span> Report</li>
+        <li className={activePage === 'view_reception_records' ? 'active' : ''} onClick={() => handleLinkClick('view_reception_records')}> <span><FaClipboardList /></span>Reception data</li>
+        
+        <li className={activePage === 'reception_data_report' ? 'active' : ''} onClick={() => handleLinkClick('reception_data_report')}> <span><FaList /></span> Record Report</li>
+        <li className={activePage === 'reception_data_tracker' ? 'active' : ''} onClick={() => handleLinkClick('reception_data_tracker')}> <span><FaList /></span> Track Info</li>
        <h3>Admin settings</h3>
         <li className={activePage === 'view-Users' ? 'active' : ''} onClick={() => handleLinkClick('view-Users')}><FaUser  /> Users</li>
         <li className={activePage === 'user-roles' ? 'active' : ''} onClick={() => handleLinkClick('user-roles')}><FaHome /> User Roles</li>
@@ -65,11 +67,14 @@ const Navbar = ({ setCurrentPage, privileges, isVisible, closeNav }) => {
         <li className={activePage === 'help-center' ? 'active' : ''} onClick={() => handleLinkClick('help-center')}><FaBurn /> Help Center</li>
         
       </ul>
-        <div className='logout-btn'>
-               <li onClick={() => setShowLogoutConfirm(true)}>
-                 <FaSignOutAlt color='black' /> Logout
-               </li>
+      <ol>
+      <div className='logout-btn'>
+             <li onClick={() => setShowLogoutConfirm(true)}>
+               <FaSignOutAlt color='black' /> Logout
+             </li>
              </div>
+      </ol>
+  
                    {/* Logout confirmation modal */}
       {showLogoutConfirm && (
         <div className="modal-overlay">

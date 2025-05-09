@@ -19,6 +19,26 @@
   .menu-toggle{
     position: fixed;
   }
+  @media (min-width: 601px) and (max-width: 800px) {
+
+    .admin-dashboard {
+      width: 100%; /* Full width on small screens **/
+      background-color: #007bff;
+      margin-left: 0rem; 
+      margin-top: 0%;
+      position: absolute;
+    }
+  
+    .Admincontent-page {
+        width: 100%;
+        position: absolute;
+        margin-top: 0rem;
+        margin-left: 0rem;
+        padding: 10px;
+    }
+  
+  }
+  
 
   /***********responsiving on small devices*****************/
   @media (min-width: 601px) and (max-width: 800px) {

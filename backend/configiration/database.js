@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/kdsDatabase', { 
+    await mongoose.connect('mongodb://192.168.43.224:27017/kdsDatabase', { 
       // You can add options here if needed
       useNewUrlParser: true,
 
