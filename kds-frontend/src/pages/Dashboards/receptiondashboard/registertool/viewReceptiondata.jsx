@@ -115,7 +115,7 @@ const ReceptionList = () => {
 
   return (
     <div className="reception-list-container">
-      <h2>Reception Records</h2>
+      <h3>Reception Records</h3>
     <div className="reception-records-data">
 
     

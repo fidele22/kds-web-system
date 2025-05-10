@@ -45,7 +45,12 @@
     height: 2px; /* Adjust height as needed */
     background: #c7c7c7;
   }
-  
+  @media (min-width: 601px) and (max-width: 800px) {
+    .footer{
+      width: 100%;
+     }
+  }
+ 
   @media (min-width: 300px) and (max-width: 600px) {
     /* CSS rules here */
     .footer-data{

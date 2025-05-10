@@ -4,6 +4,7 @@
   background-color: #ebecec;
 }
 .reception-form-container h2{
+  font-size: 22px;
   text-align: center;
 }
 .reception-form-container form {
@@ -203,7 +204,14 @@ textarea:focus {
     padding: 1rem;
     border-radius: 10px;
   }
-
+.reception-list-container{
+  padding: 5px;
+  margin-top: 2rem;
+}
+.reception-form-container h3{
+  margin-top: 2rem;
+  font-size: 1px;
+}
   input, textarea {
     font-size: 0.95rem;
   }

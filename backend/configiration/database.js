@@ -2,10 +2,8 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://192.168.43.224:27017/kdsDatabase', { 
-      // You can add options here if needed
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
-
       useUnifiedTopology: true,
     });
     
@@ -19,3 +17,4 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+// dzG5wNuWE8SW4Whi
